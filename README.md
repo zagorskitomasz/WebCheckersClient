@@ -1,0 +1,2 @@
+# WebCheckersClient
+Libgdx desktop+GWT
