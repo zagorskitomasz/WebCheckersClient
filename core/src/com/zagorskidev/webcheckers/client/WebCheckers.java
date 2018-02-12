@@ -1,33 +1,39 @@
 package com.zagorskidev.webcheckers.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class WebCheckers extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+	
+	private Drawable game;
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		initializeGame();
+		initializeMessagesThread();
+	}
+	
+	private void initializeGame() {
+		game = new GameManager();
+	}
+
+	private void initializeMessagesThread() {
+		
+		Runnable messagesDispatcher = prepareMessagesDispatcher();
+		
+		Thread messagesDispatcherThread = new Thread(messagesDispatcher);
+		messagesDispatcherThread.start();
+	}
+
+	private Runnable prepareMessagesDispatcher() {
+		
+		Runnable messagesDispatcher;
+		TasksDispatcher tasksDispatcher = (TasksDispatcher)game;
+		
+		return new MessagesDispatcher(tasksDispatcher);
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		game.draw();
 	}
 }
