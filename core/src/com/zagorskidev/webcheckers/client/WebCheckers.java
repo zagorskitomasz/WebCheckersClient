@@ -1,10 +1,14 @@
 package com.zagorskidev.webcheckers.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.zagorskidev.webcheckers.client.manager.CheckersManager;
+import com.zagorskidev.webcheckers.client.manager.GameManager;
+import com.zagorskidev.webcheckers.client.messages.CheckersMessager;
+import com.zagorskidev.webcheckers.client.messages.Messager;
 
 public class WebCheckers extends ApplicationAdapter {
 	
-	private Drawable game;
+	private GameManager game;
 	
 	@Override
 	public void create () {
@@ -13,23 +17,24 @@ public class WebCheckers extends ApplicationAdapter {
 	}
 	
 	private void initializeGame() {
-		game = new GameManager();
+		game = new CheckersManager();
 	}
 
 	private void initializeMessagesThread() {
 		
-		Runnable messagesDispatcher = prepareMessagesDispatcher();
+		Messager messagesDispatcher = prepareMessager();
 		
 		Thread messagesDispatcherThread = new Thread(messagesDispatcher);
 		messagesDispatcherThread.start();
 	}
 
-	private Runnable prepareMessagesDispatcher() {
+	private Messager prepareMessager() {
 		
-		Runnable messagesDispatcher;
-		TasksDispatcher tasksDispatcher = (TasksDispatcher)game;
+		Messager messager = new CheckersMessager();
+		messager.registerMessagesConsumer(game);
+		game.registerMessagesSender(messager);
 		
-		return new MessagesDispatcher(tasksDispatcher);
+		return messager;
 	}
 
 	@Override
