@@ -4,6 +4,11 @@ import com.zagorskidev.webcheckers.client.messages.Message;
 import com.zagorskidev.webcheckers.client.messages.Messager;
 import com.zagorskidev.webcheckers.client.messages.MessagesConsumer;
 
+/**
+ * Straight implementation.
+ * @author tomek
+ *
+ */
 public class CheckersMessager implements Messager {
 
 	@Override

@@ -1,14 +1,22 @@
 package com.zagorskidev.webcheckers.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.manager.CheckersManager;
 import com.zagorskidev.webcheckers.client.manager.GameManager;
 import com.zagorskidev.webcheckers.client.messages.CheckersMessager;
 import com.zagorskidev.webcheckers.client.messages.Messager;
+import com.zagorskidev.webcheckers.client.model.CheckersModel;
 
+/**
+ * Libgdx core application.
+ * @author tomek
+ *
+ */
 public class WebCheckers extends ApplicationAdapter {
 	
-	private GameManager game;
+	private GameManager gameManager;
+	private Drawable gameModel;
 	
 	@Override
 	public void create () {
@@ -17,7 +25,8 @@ public class WebCheckers extends ApplicationAdapter {
 	}
 	
 	private void initializeGame() {
-		game = new CheckersManager();
+		gameManager = new CheckersManager();
+		gameModel = CheckersModel.getInstance();
 	}
 
 	private void initializeMessagesThread() {
@@ -31,14 +40,14 @@ public class WebCheckers extends ApplicationAdapter {
 	private Messager prepareMessager() {
 		
 		Messager messager = new CheckersMessager();
-		messager.registerMessagesConsumer(game);
-		game.registerMessagesSender(messager);
+		messager.registerMessagesConsumer(gameManager);
+		gameManager.registerMessagesSender(messager);
 		
 		return messager;
 	}
 
 	@Override
 	public void render () {
-		game.draw();
+		gameModel.draw();
 	}
 }
