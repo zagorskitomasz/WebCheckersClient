@@ -1,12 +1,20 @@
 package com.zagorskidev.webcheckers.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
+import com.zagorskidev.webcheckers.client.enums.Color;
+import com.zagorskidev.webcheckers.client.enums.field.Checker;
+import com.zagorskidev.webcheckers.client.enums.field.Promotion;
 import com.zagorskidev.webcheckers.client.manager.CheckersManager;
 import com.zagorskidev.webcheckers.client.manager.GameManager;
 import com.zagorskidev.webcheckers.client.messages.CheckersMessager;
 import com.zagorskidev.webcheckers.client.messages.Messager;
 import com.zagorskidev.webcheckers.client.model.CheckersModel;
+import com.zagorskidev.webcheckers.client.model.Model;
+import com.zagorskidev.webcheckers.client.util.Position;
 
 /**
  * Libgdx core application.
@@ -18,8 +26,14 @@ public class WebCheckers extends ApplicationAdapter {
 	private GameManager gameManager;
 	private Drawable gameModel;
 	
+	private ShapeRenderer renderer;
+	
 	@Override
 	public void create () {
+		
+		Gdx.gl.glLineWidth(4);
+		renderer = new ShapeRenderer();
+		
 		initializeGame();
 		initializeMessagesThread();
 	}
@@ -27,6 +41,11 @@ public class WebCheckers extends ApplicationAdapter {
 	private void initializeGame() {
 		gameManager = new CheckersManager();
 		gameModel = CheckersModel.getInstance();
+		
+		//TODO move to controller after tests
+		((Model)gameModel).createGame(Color.WHITE); 
+		((Model)gameModel).addChecker(new Position(0, 0), Checker.BLACK, Promotion.NO);
+		((Model)gameModel).selectChecker(new Position(0, 0));
 	}
 
 	private void initializeMessagesThread() {
@@ -48,6 +67,17 @@ public class WebCheckers extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		gameModel.draw();
+		clear();
+		gameModel.draw(renderer);
+	}
+	
+	private void clear() {
+		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+	}
+	
+	@Override
+	public void dispose () {
+		renderer.dispose();
 	}
 }
