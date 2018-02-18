@@ -2,7 +2,9 @@
 Libgdx desktop+GWT
 
 To do:
-Game model: lobby (input text field for game name/pass)
+
+Input: Clicking
+Input: Text
 
 Controller: WS messages -> model state
 Controller: User input -> WS messages

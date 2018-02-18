@@ -15,15 +15,19 @@ public class BoardField implements Drawable{
 	private final int X;
 	private final int Y;
 	
+	private ShapeRenderer renderer;
+	
 	private Field field;
 	private Checker checker;
 	private Selection selection;
 	private Promotion promotion;
 	
-	public BoardField(int x, int y, Field field) {
+	public BoardField(ShapeRenderer renderer, int x, int y, Field field) {
 		
 		X = x * Sizes.FIELD_SIZE.getValue() + Sizes.BOARD_OFFSET.getValue();
 		Y = Sizes.GAME_HEIGHT.getValue() - ((y + 1) * Sizes.FIELD_SIZE.getValue() + Sizes.BOARD_OFFSET.getValue());
+		
+		this.renderer = renderer;
 		
 		this.field = field;
 		checker = Checker.NONE;
@@ -54,36 +58,36 @@ public class BoardField implements Drawable{
 		selection = Selection.NONE;
 	}
 	
-	public void draw(ShapeRenderer renderer) {
+	public void draw() {
 		
-		drawField(renderer);
-		drawChecker(renderer);
-		drawSelection(renderer);
-		drawPromotion(renderer);
+		drawField();
+		drawChecker();
+		drawSelection();
+		drawPromotion();
 	}
 	
-	private void drawField(ShapeRenderer renderer) {
+	private void drawField() {
 		
 		switch(field) {
 		case BRIGHT:
-			drawField(renderer, Color.TAN);
+			drawField(Color.TAN);
 			break;
 		case DARK:
-			drawField(renderer, Color.BROWN);
+			drawField(Color.BROWN);
 			break;
 		default:
 			break;
 		}
 	}
 	
-	private void drawChecker(ShapeRenderer renderer) {
+	private void drawChecker() {
 		
 		switch(checker) {
 		case BLACK:
-			drawChecker(renderer, Color.BLACK);
+			drawChecker(Color.BLACK);
 			break;
 		case WHITE:
-			drawChecker(renderer, Color.WHITE);
+			drawChecker(Color.WHITE);
 			break;
 		case NONE:
 			break;
@@ -92,14 +96,14 @@ public class BoardField implements Drawable{
 		}
 	}
 	
-	private void drawSelection(ShapeRenderer renderer) {
+	private void drawSelection() {
 		
 		switch(selection) {
 		case GREEN:
-			drawSelection(renderer, Color.GREEN);
+			drawSelection(Color.GREEN);
 			break;
 		case RED:
-			drawSelection(renderer, Color.RED);
+			drawSelection(Color.RED);
 			break;
 		case NONE:
 			break;
@@ -108,11 +112,11 @@ public class BoardField implements Drawable{
 		}
 	}
 	
-	private void drawPromotion(ShapeRenderer renderer) {
+	private void drawPromotion() {
 		
 		switch(promotion) {
 		case YES:
-			drawPromotion(renderer, Color.GOLD);
+			drawPromotion(Color.GOLD);
 			break;
 		case NO:
 			break;
@@ -121,7 +125,7 @@ public class BoardField implements Drawable{
 		}
 	}
 	
-	private void drawField(ShapeRenderer renderer, Color color) {
+	private void drawField(Color color) {
 		
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Filled);
@@ -129,7 +133,7 @@ public class BoardField implements Drawable{
 		renderer.end();
 	}
 	
-	private void drawChecker(ShapeRenderer renderer, Color color) {
+	private void drawChecker(Color color) {
 		
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Filled);
@@ -137,7 +141,7 @@ public class BoardField implements Drawable{
 		renderer.end();
 	}
 	
-	private void drawSelection(ShapeRenderer renderer, Color color) {
+	private void drawSelection(Color color) {
 
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Line);
@@ -145,7 +149,7 @@ public class BoardField implements Drawable{
 		renderer.end();
 	}
 	
-	private void drawPromotion(ShapeRenderer renderer, Color color) {
+	private void drawPromotion(Color color) {
 
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Filled);

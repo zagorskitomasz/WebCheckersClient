@@ -1,6 +1,5 @@
 package com.zagorskidev.webcheckers.client.controller;
 
-import com.zagorskidev.webcheckers.client.enums.ModelType;
 import com.zagorskidev.webcheckers.client.messages.Message;
 
 /**
@@ -9,9 +8,6 @@ import com.zagorskidev.webcheckers.client.messages.Message;
  *
  */
 public interface Controller {
-
-	public boolean setModelType(ModelType modelType);
-	public ModelType getModelType();
 	
 	/**
 	 * Translates click coords to output message using current model state

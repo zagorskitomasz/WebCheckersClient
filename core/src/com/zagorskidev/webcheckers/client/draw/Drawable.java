@@ -1,7 +1,5 @@
 package com.zagorskidev.webcheckers.client.draw;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
 /**
  * Can be drawn in libGDX main loop.
  * @author tomek
@@ -9,5 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public interface Drawable {
 
-	public void draw(ShapeRenderer renderer);
+	public void draw();
+	public default void dispose() {}
 }

@@ -1,6 +1,9 @@
 package com.zagorskidev.webcheckers.client.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.Color;
 import com.zagorskidev.webcheckers.client.enums.ModelType;
@@ -19,7 +22,6 @@ public class CheckersModel implements Model {
 	private static Model model;
 	
 	public static Model getInstance() {
-		
 		if(model == null)
 			model = new CheckersModel();
 		
@@ -27,25 +29,38 @@ public class CheckersModel implements Model {
 	}
 	
 	private Drawable view;
+	private Stage stage;
+	private ShapeRenderer renderer;
 	
 	private LobbyModel lobbyModel;
 	private GameModel gameModel;
 	
 	private boolean inverted;
 	private GameID gameID;
+	private boolean gameOver;
 	
 	private CheckersModel() {
-		lobbyModel = new LobbyModelImpl();
 		
-		view = lobbyModel;
+		Gdx.gl.glLineWidth(4);
+		renderer = new ShapeRenderer();
+		stage = new Stage(new ScreenViewport());
+		
+		createLobby();
 	}
 	
 	@Override
 	public void createGame(Color color) {
 		
 		inverted = color == Color.WHITE ? false : true;
-		gameModel = new GameModelImpl(inverted);
+		gameModel = new GameModelImpl(stage, renderer, inverted);
 		setModel(ModelType.GAME);
+	}
+	
+	@Override
+	public void createLobby() {
+		
+		lobbyModel = new LobbyModelImpl(stage, renderer);
+		setModel(ModelType.LOBBY);
 	}
 	
 	@Override
@@ -63,8 +78,9 @@ public class CheckersModel implements Model {
 		return inverted;
 	}
 	
-	@Override
-	public void setModel(ModelType modelType) {
+	private void setModel(ModelType modelType) {
+
+		gameOver = false;
 		
 		switch(modelType) {
 		case GAME:
@@ -109,9 +125,30 @@ public class CheckersModel implements Model {
 	}
 	
 	@Override
-	public void draw(ShapeRenderer renderer) {
-		
+	public void setLabel(String text, com.badlogic.gdx.graphics.Color color) {
+		gameModel.setLabel(text, color);
+	}
+	
+	@Override
+	public void gameOver(String message, com.badlogic.gdx.graphics.Color color) {
+		gameOver = true;
+		setLabel(message, color);
+	}
+	
+	@Override
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
+	@Override
+	public void draw() {
 		if(view != null)
-			view.draw(renderer);
+			view.draw();
+	}
+	
+	@Override
+	public void dispose() {
+		if(view != null)
+			view.dispose();
 	}
 }

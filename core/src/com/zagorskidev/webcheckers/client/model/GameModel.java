@@ -1,5 +1,6 @@
 package com.zagorskidev.webcheckers.client.model;
 
+import com.badlogic.gdx.graphics.Color;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
 import com.zagorskidev.webcheckers.client.enums.field.Promotion;
@@ -17,4 +18,5 @@ public interface GameModel extends Drawable{
 	public void selectChecker(Position position);
 	public void unselectChecker(Position position);
 	public void selectCheckerToKill(Position position);
+	public void setLabel(String text, Color color);
 }

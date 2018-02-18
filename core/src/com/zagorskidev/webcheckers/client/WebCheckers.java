@@ -3,7 +3,6 @@ package com.zagorskidev.webcheckers.client;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.Color;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
@@ -25,15 +24,10 @@ public class WebCheckers extends ApplicationAdapter {
 	
 	private GameManager gameManager;
 	private Drawable gameModel;
-	
-	private ShapeRenderer renderer;
-	
+		
 	@Override
 	public void create () {
-		
-		Gdx.gl.glLineWidth(4);
-		renderer = new ShapeRenderer();
-		
+
 		initializeGame();
 		initializeMessagesThread();
 	}
@@ -43,9 +37,9 @@ public class WebCheckers extends ApplicationAdapter {
 		gameModel = CheckersModel.getInstance();
 		
 		//TODO move to controller after tests
-		((Model)gameModel).createGame(Color.WHITE); 
+		/*((Model)gameModel).createGame(Color.WHITE); 
 		((Model)gameModel).addChecker(new Position(0, 0), Checker.BLACK, Promotion.NO);
-		((Model)gameModel).selectChecker(new Position(0, 0));
+		((Model)gameModel).selectChecker(new Position(0, 0));*/
 	}
 
 	private void initializeMessagesThread() {
@@ -68,7 +62,7 @@ public class WebCheckers extends ApplicationAdapter {
 	@Override
 	public void render () {
 		clear();
-		gameModel.draw(renderer);
+		gameModel.draw();
 	}
 	
 	private void clear() {
@@ -78,6 +72,6 @@ public class WebCheckers extends ApplicationAdapter {
 	
 	@Override
 	public void dispose () {
-		renderer.dispose();
+		gameModel.dispose();
 	}
 }

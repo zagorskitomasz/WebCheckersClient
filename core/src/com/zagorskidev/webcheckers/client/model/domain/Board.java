@@ -1,6 +1,8 @@
 package com.zagorskidev.webcheckers.client.model.domain;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
@@ -11,12 +13,18 @@ import com.zagorskidev.webcheckers.client.util.Position;
 
 public class Board implements Drawable {
 	
-	private Drawable background;
+	private Stage stage;
+	private ShapeRenderer renderer;
+	
+	private Background background;
 	private BoardField[][] board;
 	
-	public Board(boolean inverted) {
+	public Board(Stage stage, ShapeRenderer renderer, boolean inverted) {
 		
-		background = new Background();
+		this.stage = stage;
+		this.renderer = renderer;
+		
+		background = new Background(stage, renderer);
 		board = new BoardField[Sizes.FIELD_NUMBER.getValue()][Sizes.FIELD_NUMBER.getValue()];
 		initialize(inverted);
 	}
@@ -33,9 +41,9 @@ public class Board implements Drawable {
 	private void initializeField(int i, int j, boolean inverted) {
 		
 		if(!inverted) 
-			board[i][j] = new BoardField(i, j, chooseFieldColor(i, j));
+			board[i][j] = new BoardField(renderer, i, j, chooseFieldColor(i, j));
 		else 
-			board[i][j] = new BoardField(maxFieldIndex() - i, maxFieldIndex() - j, chooseFieldColor(i, j));
+			board[i][j] = new BoardField(renderer, maxFieldIndex() - i, maxFieldIndex() - j, chooseFieldColor(i, j));
 	}
 
 	private Field chooseFieldColor(int i, int j) {
@@ -76,16 +84,27 @@ public class Board implements Drawable {
 		BoardField field = board[position.X][position.Y];
 		field.setSelection(Selection.RED);
 	}
+	
+	public void setLabel(String text, Color color) {
+		background.setLabel(text, color);
+	}
 
 	@Override
-	public void draw(ShapeRenderer renderer) {
+	public void draw() {
 		
-		background.draw(renderer);
+		background.draw();
 		
 		for(int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++) {
-				board[i][j].draw(renderer);
+				board[i][j].draw();
 			}
 		}
+	}
+	
+	@Override
+	public void dispose() {
+		
+		stage.dispose();
+		renderer.dispose();
 	}
 }
