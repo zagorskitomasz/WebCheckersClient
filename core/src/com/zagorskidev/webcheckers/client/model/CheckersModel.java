@@ -34,6 +34,9 @@ public class CheckersModel implements Model {
 	
 	private LobbyModel lobbyModel;
 	private GameModel gameModel;
+	private WaitingModel waitingModel;
+	
+	private ModelType modelType;
 	
 	private boolean inverted;
 	private GameID gameID;
@@ -49,7 +52,14 @@ public class CheckersModel implements Model {
 	}
 	
 	@Override
-	public void createGame(Color color) {
+	public void createGame() {
+		
+		waitingModel = new WaitingModelImpl(stage);
+		setModel(ModelType.WAITING);
+	}
+	
+	@Override
+	public void startGame(Color color) {
 		
 		inverted = color == Color.WHITE ? false : true;
 		gameModel = new GameModelImpl(stage, renderer, inverted);
@@ -81,6 +91,7 @@ public class CheckersModel implements Model {
 	private void setModel(ModelType modelType) {
 
 		gameOver = false;
+		this.modelType = modelType;
 		
 		switch(modelType) {
 		case GAME:
@@ -89,6 +100,8 @@ public class CheckersModel implements Model {
 		case LOBBY:
 			view = lobbyModel;
 			break;
+		case WAITING:
+			view = waitingModel;
 		default:
 			break;
 		}
@@ -138,6 +151,16 @@ public class CheckersModel implements Model {
 	@Override
 	public boolean isGameOver() {
 		return gameOver;
+	}
+	
+	@Override
+	public boolean isDuringGame() {
+		return modelType == ModelType.GAME;
+	}
+	
+	@Override
+	public boolean isInLobby() {
+		return modelType == ModelType.LOBBY;
 	}
 	
 	@Override

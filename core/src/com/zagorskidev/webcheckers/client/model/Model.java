@@ -8,13 +8,16 @@ import com.zagorskidev.webcheckers.client.util.GameID;
  * @author tomek
  *
  */
-public interface Model extends LobbyModel, GameModel{
+public interface Model extends LobbyModel, GameModel, WaitingModel{
 
-	public void createGame(Color color);
 	public void createLobby();
+	public void createGame();
+	public void startGame(Color color);
 	public boolean isInverted();
 	public void setGameID(GameID gameID);
 	public GameID getGameID();
 	public void gameOver(String message, com.badlogic.gdx.graphics.Color color);
 	public boolean isGameOver();
+	public boolean isDuringGame();
+	public boolean isInLobby();
 }

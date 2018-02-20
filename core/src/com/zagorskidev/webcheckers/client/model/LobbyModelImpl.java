@@ -22,11 +22,11 @@ public class LobbyModelImpl implements LobbyModel {
 	private Drawable btnCreate;
 	private Drawable btnJoin;
 	
-	private static final int btnXPos = Sizes.GAME_WIDTH.getValue() / 2 - 120;
-	private static final int btnCreateYPos = Sizes.GAME_HEIGHT.getValue() - 300;
-	private static final int btnJoinYPos = Sizes.GAME_HEIGHT.getValue() - 480;
-	private static final int btnXSize = 240;
-	private static final int btnYSize = 100;
+	public static final int btnXPos = Sizes.GAME_WIDTH.getValue() / 2 - 120;
+	public static final int btnCreateYPos = Sizes.GAME_HEIGHT.getValue() - 300;
+	public static final int btnJoinYPos = Sizes.GAME_HEIGHT.getValue() - 480;
+	public static final int btnXSize = 240;
+	public static final int btnYSize = 100;
 	
 	public LobbyModelImpl(Stage stage, ShapeRenderer renderer) {
 		

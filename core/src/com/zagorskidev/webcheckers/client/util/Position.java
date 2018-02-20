@@ -2,6 +2,8 @@ package com.zagorskidev.webcheckers.client.util;
 
 public class Position {
 
+	public static final Position NOWHERE = new Position(-1, -1);
+	
 	public final int X;
 	public final int Y;
 	

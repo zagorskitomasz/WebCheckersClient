@@ -1,8 +1,7 @@
 package com.zagorskidev.webcheckers.client.enums;
 
-public enum ModelType {
+public enum Button {
 
-	LOBBY,
-	GAME,
-	WAITING;
+	JOIN,
+	CREATE;
 }
