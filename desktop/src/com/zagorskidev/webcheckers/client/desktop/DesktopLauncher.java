@@ -11,8 +11,8 @@ public class DesktopLauncher {
 		
 		config.title = "Web Checkers";
 		config.useGL30 = true;
-		config.height = Sizes.GAME_HEIGHT.getValue();
-		config.width = Sizes.GAME_WIDTH.getValue();
+		config.height = Sizes.GAME_HEIGHT;
+		config.width = Sizes.GAME_WIDTH;
 		
 		new LwjglApplication(new WebCheckers(), config);
 	}

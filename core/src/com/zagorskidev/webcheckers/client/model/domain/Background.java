@@ -26,8 +26,8 @@ public class Background implements Drawable {
 		
 		createInfoLabel();
 		
-		msgPanel = Sizes.BOARD_MSG.getValue();
-		size = Sizes.FIELD_NUMBER.getValue() * Sizes.FIELD_SIZE.getValue() + Sizes.BOARD_OFFSET.getValue() * 2;
+		msgPanel = Sizes.BOARD_MSG;
+		size = Sizes.FIELD_NUMBER * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET * 2;
 	}
 	
 	private void createInfoLabel() {
@@ -38,7 +38,7 @@ public class Background implements Drawable {
 		label = new Label("",labelStyle);
 		label.setFontScale(2,2);
 		label.setColor(Color.TAN);
-		label.setPosition(Sizes.GAME_WIDTH.getValue() / 2 - 2 * label.getWidth() / 2, 50);
+		label.setPosition(Sizes.GAME_WIDTH / 2 - 300 / 2, 50);
 		stage.addActor(label);
 	}
 	

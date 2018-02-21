@@ -1,10 +1,9 @@
 package com.zagorskidev.webcheckers.client.controller;
 
-import com.zagorskidev.webcheckers.client.enums.Button;
+import com.zagorskidev.webcheckers.client.enums.ButtonType;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
 import com.zagorskidev.webcheckers.client.messages.Message;
 import com.zagorskidev.webcheckers.client.model.CheckersModel;
-import com.zagorskidev.webcheckers.client.model.LobbyModelImpl;
 import com.zagorskidev.webcheckers.client.model.Model;
 import com.zagorskidev.webcheckers.client.util.Position;
 
@@ -34,7 +33,7 @@ public class CheckersController implements Controller{
 		if(clickedField != null)
 			return createFieldMessage(clickedField);
 		
-		Button clickedButton = recognizeButton(xClick, yClick);
+		ButtonType clickedButton = recognizeButton(xClick, yClick);
 		
 		if(clickedButton != null)
 			createButtonMessage(clickedButton);
@@ -70,13 +69,13 @@ public class CheckersController implements Controller{
 	
 	private Position calculatePosition(int xClick, int yClick) {
 		
-		int x = (xClick - Sizes.BOARD_OFFSET.getValue()) / Sizes.FIELD_SIZE.getValue();
-		int y = (yClick - Sizes.BOARD_OFFSET.getValue()) / Sizes.FIELD_SIZE.getValue();
+		int x = (xClick - Sizes.BOARD_OFFSET) / Sizes.FIELD_SIZE;
+		int y = (yClick - Sizes.BOARD_OFFSET) / Sizes.FIELD_SIZE;
 		
-		if(xClick < Sizes.BOARD_OFFSET.getValue())
+		if(xClick < Sizes.BOARD_OFFSET)
 			x = -1;
 		
-		if(yClick < Sizes.BOARD_OFFSET.getValue())
+		if(yClick < Sizes.BOARD_OFFSET)
 			y = -1;
 		
 		return new Position(x, y);
@@ -84,8 +83,8 @@ public class CheckersController implements Controller{
 	
 	private Position validatePosition(Position position) {
 		
-		if (position.X >= 0 && position.X < Sizes.FIELD_NUMBER.getValue() 
-				&& position.Y >= 0 && position.Y < Sizes.FIELD_NUMBER.getValue())
+		if (position.X >= 0 && position.X < Sizes.FIELD_NUMBER 
+				&& position.Y >= 0 && position.Y < Sizes.FIELD_NUMBER)
 			return position;
 		else
 			return Position.NOWHERE;
@@ -93,7 +92,7 @@ public class CheckersController implements Controller{
 	
 	private Position invertPosition(Position position) {
 		
-		int maxFieldIndex = Sizes.FIELD_NUMBER.getValue() - 1;
+		int maxFieldIndex = Sizes.FIELD_NUMBER - 1;
 		
 		int invertedX = maxFieldIndex - position.X;
 		int invertedY = maxFieldIndex - position.Y;
@@ -107,23 +106,12 @@ public class CheckersController implements Controller{
 		//TODO
 	}
 	
-	private Button recognizeButton(int xClick, int yClick) {
+	private ButtonType recognizeButton(int xClick, int yClick) {
 		
-		if(!model.isInLobby())
-			return null;
-		
-		if(xClick >= LobbyModelImpl.btnXPos && xClick <= LobbyModelImpl.btnXPos + LobbyModelImpl.btnXSize
-				&& yClick <= Sizes.GAME_HEIGHT.getValue() - LobbyModelImpl.btnCreateYPos && yClick >= Sizes.GAME_HEIGHT.getValue() - (LobbyModelImpl.btnCreateYPos + LobbyModelImpl.btnYSize))
-			return Button.CREATE;
-		
-		if(xClick >= LobbyModelImpl.btnXPos && xClick <= LobbyModelImpl.btnXPos + LobbyModelImpl.btnXSize
-				&& yClick <= Sizes.GAME_HEIGHT.getValue() - LobbyModelImpl.btnJoinYPos && yClick >= Sizes.GAME_HEIGHT.getValue() - (LobbyModelImpl.btnJoinYPos + LobbyModelImpl.btnYSize))
-			return Button.JOIN;
-		
-		return null;
+		return model.recognizeClickedButton(xClick, yClick);
 	}
 	
-	private Message createButtonMessage(Button button) {
+	private Message createButtonMessage(ButtonType button) {
 		System.out.println(button);
 		return null;
 		//TODO

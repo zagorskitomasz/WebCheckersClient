@@ -24,8 +24,8 @@ public class BoardField implements Drawable{
 	
 	public BoardField(ShapeRenderer renderer, int x, int y, Field field) {
 		
-		X = x * Sizes.FIELD_SIZE.getValue() + Sizes.BOARD_OFFSET.getValue();
-		Y = Sizes.GAME_HEIGHT.getValue() - ((y + 1) * Sizes.FIELD_SIZE.getValue() + Sizes.BOARD_OFFSET.getValue());
+		X = x * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET;
+		Y = Sizes.GAME_HEIGHT - ((y + 1) * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET);
 		
 		this.renderer = renderer;
 		
@@ -129,7 +129,7 @@ public class BoardField implements Drawable{
 		
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Filled);
-		renderer.rect(X + 2, Y + 2, Sizes.FIELD_SIZE.getValue() - 4, Sizes.FIELD_SIZE.getValue() - 4);
+		renderer.rect(X + 2, Y + 2, Sizes.FIELD_SIZE - 4, Sizes.FIELD_SIZE - 4);
 		renderer.end();
 	}
 	
@@ -137,7 +137,7 @@ public class BoardField implements Drawable{
 		
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Filled);
-		renderer.ellipse(X + 6, Y + 6, Sizes.FIELD_SIZE.getValue() - 12, Sizes.FIELD_SIZE.getValue() - 12);
+		renderer.ellipse(X + 6, Y + 6, Sizes.FIELD_SIZE - 12, Sizes.FIELD_SIZE - 12);
 		renderer.end();
 	}
 	
@@ -145,7 +145,7 @@ public class BoardField implements Drawable{
 
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Line);
-		renderer.ellipse(X + 5, Y + 5, Sizes.FIELD_SIZE.getValue() - 10, Sizes.FIELD_SIZE.getValue() - 10);
+		renderer.ellipse(X + 5, Y + 5, Sizes.FIELD_SIZE - 10, Sizes.FIELD_SIZE - 10);
 		renderer.end();
 	}
 	
@@ -154,11 +154,11 @@ public class BoardField implements Drawable{
 		renderer.setColor(color);
 		renderer.begin(ShapeType.Filled);
 		renderer.triangle(X + 12, Y + 18, 
-				X + Sizes.FIELD_SIZE.getValue() / 2, Y + Sizes.FIELD_SIZE.getValue() - 9, 
-				X + Sizes.FIELD_SIZE.getValue() - 12, Y + 18);
-		renderer.triangle(X + 12, Y + Sizes.FIELD_SIZE.getValue() - 18, 
-				X + Sizes.FIELD_SIZE.getValue() / 2, Y + 9, 
-				X + Sizes.FIELD_SIZE.getValue() - 12, Y  + Sizes.FIELD_SIZE.getValue() - 18);
+				X + Sizes.FIELD_SIZE / 2, Y + Sizes.FIELD_SIZE - 9, 
+				X + Sizes.FIELD_SIZE - 12, Y + 18);
+		renderer.triangle(X + 12, Y + Sizes.FIELD_SIZE - 18, 
+				X + Sizes.FIELD_SIZE / 2, Y + 9, 
+				X + Sizes.FIELD_SIZE - 12, Y  + Sizes.FIELD_SIZE - 18);
 		renderer.end();
 	}
 }

@@ -1,21 +1,13 @@
 package com.zagorskidev.webcheckers.client.enums;
 
-public enum Sizes {
+public class Sizes {
 
-	BOARD_OFFSET(20),
-	BOARD_MSG(100),
-	FIELD_SIZE(50),
-	FIELD_NUMBER(10),
-	GAME_WIDTH(FIELD_NUMBER.getValue() * FIELD_SIZE.getValue() + 2 * BOARD_OFFSET.getValue()),
-	GAME_HEIGHT(GAME_WIDTH.getValue() + BOARD_MSG.getValue());
-	
-	private int value;
-	
-	private Sizes(int value) {
-		this.value = value;
-	}
-	
-	public int getValue() {
-		return value;
-	}
+	public static final int BOARD_OFFSET = 20;
+	public static final int BOARD_MSG = 100;
+	public static final int FIELD_SIZE = 50;
+	public static final int FIELD_NUMBER = 10;
+	public static final int GAME_WIDTH = FIELD_NUMBER * FIELD_SIZE + 2 * BOARD_OFFSET;
+	public static final int GAME_HEIGHT = GAME_WIDTH + BOARD_MSG;
+	public static final int BUTTON_SIZE_X = 240;
+	public static final int BUTTON_SIZE_Y = 100;
 }

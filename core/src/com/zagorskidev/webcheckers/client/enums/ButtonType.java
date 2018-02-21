@@ -1,6 +1,6 @@
 package com.zagorskidev.webcheckers.client.enums;
 
-public enum Button {
+public enum ButtonType {
 
 	JOIN,
 	CREATE;

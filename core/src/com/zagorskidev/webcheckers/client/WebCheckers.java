@@ -4,11 +4,16 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
+import com.zagorskidev.webcheckers.client.enums.Color;
+import com.zagorskidev.webcheckers.client.enums.field.Checker;
+import com.zagorskidev.webcheckers.client.enums.field.Promotion;
 import com.zagorskidev.webcheckers.client.manager.CheckersManager;
 import com.zagorskidev.webcheckers.client.manager.GameManager;
 import com.zagorskidev.webcheckers.client.messages.CheckersMessager;
 import com.zagorskidev.webcheckers.client.messages.Messager;
 import com.zagorskidev.webcheckers.client.model.CheckersModel;
+import com.zagorskidev.webcheckers.client.model.Model;
+import com.zagorskidev.webcheckers.client.util.Position;
 
 /**
  * Libgdx core application.
@@ -31,12 +36,11 @@ public class WebCheckers extends ApplicationAdapter {
 		gameManager = new CheckersManager();
 		gameModel = CheckersModel.getInstance();
 		
-		//((Model)gameModel).createGame(); 
-		
-		//TODO move to controller after tests
-		/*((Model)gameModel).startGame(Color.BLACK); 
+		((Model)gameModel).createGame();
+		((Model)gameModel).startGame(Color.BLACK); 
 		((Model)gameModel).addChecker(new Position(0, 0), Checker.BLACK, Promotion.NO);
-		((Model)gameModel).selectChecker(new Position(0, 0));*/
+		((Model)gameModel).selectChecker(new Position(0, 0));
+		((Model)gameModel).gameOver("White won!", com.badlogic.gdx.graphics.Color.GREEN);
 	}
 
 	private void initializeMessagesThread() {

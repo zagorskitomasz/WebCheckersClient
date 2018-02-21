@@ -19,7 +19,7 @@ public class WaitingModelImpl implements WaitingModel{
 	
 	private void createWaitingLabel() {
 		
-		createLabel("Waiting for \nsecond player...", Color.GREEN, 0, Sizes.GAME_HEIGHT.getValue() - 250, 3);
+		createLabel("Waiting for \nsecond player...", Color.GREEN, 0, Sizes.GAME_HEIGHT - 250, 3);
 	}
 	
 	private void createLabel(String text, Color color, float moveLeft, float y, float fontSize) {
@@ -31,7 +31,7 @@ public class WaitingModelImpl implements WaitingModel{
 		label = new Label(text,labelStyle);
 		label.setFontScale(fontSize, fontSize);
 		label.setColor(color);
-		label.setPosition(Sizes.GAME_WIDTH.getValue() / 2 - fontSize * label.getWidth() / 2 - moveLeft, y);
+		label.setPosition(Sizes.GAME_WIDTH / 2 - fontSize * label.getWidth() / 2 - moveLeft, y);
 		
 		stage.addActor(label);
 	}

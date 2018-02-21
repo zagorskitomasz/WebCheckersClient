@@ -25,7 +25,7 @@ public class Board implements Drawable {
 		this.renderer = renderer;
 		
 		background = new Background(stage, renderer);
-		board = new BoardField[Sizes.FIELD_NUMBER.getValue()][Sizes.FIELD_NUMBER.getValue()];
+		board = new BoardField[Sizes.FIELD_NUMBER][Sizes.FIELD_NUMBER];
 		initialize(inverted);
 	}
 	
@@ -51,7 +51,7 @@ public class Board implements Drawable {
 	}
 	
 	private int maxFieldIndex() {
-		return Sizes.FIELD_NUMBER.getValue() - 1;
+		return Sizes.FIELD_NUMBER - 1;
 	}
 
 	public void addChecker(Position position, Checker checker, Promotion promotion) {

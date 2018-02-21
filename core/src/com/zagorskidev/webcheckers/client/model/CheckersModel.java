@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
+import com.zagorskidev.webcheckers.client.enums.ButtonType;
 import com.zagorskidev.webcheckers.client.enums.Color;
 import com.zagorskidev.webcheckers.client.enums.ModelType;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
@@ -161,6 +162,15 @@ public class CheckersModel implements Model {
 	@Override
 	public boolean isInLobby() {
 		return modelType == ModelType.LOBBY;
+	}
+
+	@Override
+	public ButtonType recognizeClickedButton(int xClick, int yClick) {
+		
+		if(!isInLobby())
+			return null;
+		
+		return lobbyModel.recognizeClickedButton(xClick, yClick);
 	}
 	
 	@Override
