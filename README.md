@@ -1,14 +1,10 @@
 # WebCheckersClient
 Libgdx desktop+GWT
 
-TODO
-
-Input: Text
+TODO:
 
 Controller: WS messages -> model state
 
-Controller: User input -> WS messages
+Communication: WebSocket client sending
 
-Communication: gameID validation
-
-Communication: WebSocket client
+Communication: WebSocket client receiving

@@ -40,7 +40,6 @@ public class WebCheckers extends ApplicationAdapter {
 		((Model)gameModel).startGame(Color.BLACK); 
 		((Model)gameModel).addChecker(new Position(0, 0), Checker.BLACK, Promotion.NO);
 		((Model)gameModel).selectChecker(new Position(0, 0));
-		((Model)gameModel).gameOver("White won!", com.badlogic.gdx.graphics.Color.GREEN);
 	}
 
 	private void initializeMessagesThread() {

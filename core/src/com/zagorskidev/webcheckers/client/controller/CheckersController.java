@@ -1,10 +1,12 @@
 package com.zagorskidev.webcheckers.client.controller;
 
 import com.zagorskidev.webcheckers.client.enums.ButtonType;
+import com.zagorskidev.webcheckers.client.enums.MsgCode;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
 import com.zagorskidev.webcheckers.client.messages.Message;
 import com.zagorskidev.webcheckers.client.model.CheckersModel;
 import com.zagorskidev.webcheckers.client.model.Model;
+import com.zagorskidev.webcheckers.client.util.GameID;
 import com.zagorskidev.webcheckers.client.util.Position;
 
 /**
@@ -15,9 +17,11 @@ import com.zagorskidev.webcheckers.client.util.Position;
 public class CheckersController implements Controller{
 
 	private Model model;
+	private GameRequester requester;
 	
-	public CheckersController() {
+	public CheckersController(GameRequester requester) {
 		model = CheckersModel.getInstance();
+		this.requester = requester;
 	}
 
 	@Override
@@ -30,13 +34,17 @@ public class CheckersController implements Controller{
 		
 		Position clickedField = recognizeField(xClick, yClick);
 		
-		if(clickedField != null)
-			return createFieldMessage(clickedField);
+		if(clickedField != null) {
+			if(isValidField(clickedField))
+				return createFieldMessage(clickedField);
+			else
+				return null;
+		}
 		
 		ButtonType clickedButton = recognizeButton(xClick, yClick);
 		
 		if(clickedButton != null)
-			createButtonMessage(clickedButton);
+			executeButtonMessage(clickedButton);
 		
 		return null;
 	}
@@ -100,10 +108,17 @@ public class CheckersController implements Controller{
 		return new Position(invertedX, invertedY);
 	}
 	
+	private boolean isValidField(Position position) {
+		
+		return position != Position.NOWHERE;
+	}
+	
 	private Message createFieldMessage(Position clickedField) {
-		System.out.println(clickedField);
-		return null;
-		//TODO
+		
+		GameID gameID = model.getGameID();
+		Message message = new Message(MsgCode.CLICKED_FIELD, gameID, clickedField.toString());
+		
+		return message;
 	}
 	
 	private ButtonType recognizeButton(int xClick, int yClick) {
@@ -111,10 +126,16 @@ public class CheckersController implements Controller{
 		return model.recognizeClickedButton(xClick, yClick);
 	}
 	
-	private Message createButtonMessage(ButtonType button) {
-		System.out.println(button);
-		return null;
-		//TODO
+	private Message executeButtonMessage(ButtonType button) {
+		
+		switch(button) {
+		case CREATE:
+			requester.executeMessage(MsgCode.CREATE_GAME);
+		case JOIN:
+			requester.executeMessage(MsgCode.JOIN_GAME);
+		default:
+			return null;
+		}
 	}
 
 	@Override

@@ -11,6 +11,8 @@ import com.zagorskidev.webcheckers.client.messages.MessagesConsumer;
  */
 public class CheckersMessager implements Messager {
 
+	private MessagesConsumer consumer;
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -19,14 +21,12 @@ public class CheckersMessager implements Messager {
 
 	@Override
 	public void sendMessage(Message message) {
-		// TODO Auto-generated method stub
-
+		System.out.println(message.CODE + " " + message.gameID + " " + (message.ARGS == null ? "empty" : message.ARGS[0]));
 	}
 
 	@Override
 	public void registerMessagesConsumer(MessagesConsumer consumer) {
-		// TODO Auto-generated method stub
-
+		this.consumer = consumer;
 	}
 
 }
