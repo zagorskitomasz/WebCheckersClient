@@ -73,10 +73,14 @@ public class Board implements Drawable {
 		field.setSelection(Selection.GREEN);
 	}
 
-	public void unselectChecker(Position position) {
+	public void clearSelection() {
 		
-		BoardField field = board[position.X][position.Y];
-		field.setSelection(Selection.NONE);
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				if(board[i][j].isSelected())
+					board[i][j].setSelection(Selection.NONE);
+			}
+		}
 	}
 
 	public void selectCheckerToKill(Position position) {

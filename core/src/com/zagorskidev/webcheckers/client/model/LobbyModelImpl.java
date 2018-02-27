@@ -24,6 +24,9 @@ public class LobbyModelImpl implements LobbyModel {
 	private Button createButton;
 	private Button joinButton;
 	
+	private Label titleLabel;
+	private Label messageLabel;
+	
 	public LobbyModelImpl(Stage stage, ShapeRenderer renderer) {
 		
 		this.stage = stage;
@@ -31,14 +34,21 @@ public class LobbyModelImpl implements LobbyModel {
 		
 		stage.clear();
 		
-		createTitleLabel();		
+		titleLabel = createTitleLabel();
+		messageLabel = createMessageLabel();
 		createButtons();
+		addLabels();
 		
 	}
 	
-	private void createTitleLabel() {
+	private Label createTitleLabel() {
 		
-		createLabel("Web Checkers", Color.GREEN, 0, Sizes.GAME_HEIGHT - 100, 3);
+		return createLabel("Web Checkers", Color.GREEN, 0, Sizes.GAME_HEIGHT - 100, 3);
+	}
+	
+	private Label createMessageLabel() {
+		
+		return createLabel("", Color.GREEN, 200, Sizes.GAME_HEIGHT - 600, 2);
 	}
 	
 	private void createButtons() {
@@ -47,7 +57,7 @@ public class LobbyModelImpl implements LobbyModel {
 		joinButton = new JoinButton(stage, renderer);
 	}
 	
-	private void createLabel(String text, Color color, float moveLeft, float y, float fontSize) {
+	private Label createLabel(String text, Color color, float moveLeft, float y, float fontSize) {
 		
 		Label.LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = new BitmapFont();
@@ -58,7 +68,13 @@ public class LobbyModelImpl implements LobbyModel {
 		label.setColor(color);
 		label.setPosition(Sizes.GAME_WIDTH / 2 - fontSize * label.getWidth() / 2 - moveLeft, y);
 		
-		stage.addActor(label);
+		return label;
+	}
+	
+	private void addLabels() {
+
+		stage.addActor(titleLabel);
+		stage.addActor(messageLabel);
 	}
 	
 	@Override
@@ -85,5 +101,11 @@ public class LobbyModelImpl implements LobbyModel {
 			return ButtonType.JOIN;
 		
 		return null;
+	}
+	
+	public void setLobbyLabel(String text, Color color) {
+		
+		messageLabel.setText(text);
+		messageLabel.setColor(color);
 	}
 }

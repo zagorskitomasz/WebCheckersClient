@@ -127,9 +127,9 @@ public class CheckersModel implements Model {
 	}
 
 	@Override
-	public void unselectChecker(Position position) {
+	public void clearSelection() {
 		
-		gameModel.unselectChecker(position);
+		gameModel.clearSelection();
 	}
 
 	@Override
@@ -140,7 +140,14 @@ public class CheckersModel implements Model {
 	
 	@Override
 	public void setLabel(String text, com.badlogic.gdx.graphics.Color color) {
-		gameModel.setLabel(text, color);
+		 gameModel.setLabel(text, color);
+	}
+	
+
+	
+	@Override
+	public void setLobbyLabel(String text, com.badlogic.gdx.graphics.Color color) {
+		 lobbyModel.setLobbyLabel(text, color);
 	}
 	
 	@Override

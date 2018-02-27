@@ -41,9 +41,9 @@ public class GameModelImpl implements GameModel {
 	}
 
 	@Override
-	public void unselectChecker(Position position) {
+	public void clearSelection() {
 		
-		board.unselectChecker(position);
+		board.clearSelection();
 	}
 
 	@Override

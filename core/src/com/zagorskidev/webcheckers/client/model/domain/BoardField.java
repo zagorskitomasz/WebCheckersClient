@@ -161,4 +161,8 @@ public class BoardField implements Drawable{
 				X + Sizes.FIELD_SIZE - 12, Y  + Sizes.FIELD_SIZE - 18);
 		renderer.end();
 	}
+	
+	public boolean isSelected() {
+		return selection == Selection.GREEN;
+	}
 }

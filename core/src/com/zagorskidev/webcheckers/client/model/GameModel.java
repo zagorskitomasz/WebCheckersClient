@@ -16,7 +16,7 @@ public interface GameModel extends Drawable{
 	public void addChecker(Position position, Checker checker, Promotion promotion);
 	public void clear(Position position);
 	public void selectChecker(Position position);
-	public void unselectChecker(Position position);
+	public void clearSelection();
 	public void selectCheckerToKill(Position position);
 	public void setLabel(String text, Color color);
 }
