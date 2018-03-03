@@ -1,8 +1,8 @@
 package com.zagorskidev.webcheckers.client.messages;
 
-import com.zagorskidev.webcheckers.client.messages.Message;
-import com.zagorskidev.webcheckers.client.messages.Messager;
-import com.zagorskidev.webcheckers.client.messages.MessagesConsumer;
+import com.github.czyzby.websocket.WebSocket;
+import com.github.czyzby.websocket.WebSocketListener;
+import com.github.czyzby.websocket.WebSockets;
 
 /**
  * Straight implementation.
@@ -12,16 +12,20 @@ import com.zagorskidev.webcheckers.client.messages.MessagesConsumer;
 public class CheckersMessager implements Messager {
 
 	private MessagesConsumer consumer;
+	private WebSocket socket;
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-
+		WebSocketListener adapter = new WebSocketsListenerImpl(consumer);
+		
+		socket = WebSockets.newSocket("ws://127.0.0.1:8080/checkers/websocket");
+		socket.addListener(adapter);
+		socket.connect();
 	}
 
 	@Override
 	public void sendMessage(Message message) {
-		System.out.println(message.CODE + " " + message.gameID + " " + (message.ARGS == null ? "empty" : message.ARGS[0]));
+		socket.send(message.serialize());
 	}
 
 	@Override

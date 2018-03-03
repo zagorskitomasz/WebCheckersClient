@@ -42,6 +42,7 @@ project(":desktop") {
 
     dependencies {
         compile project(":core")
+        compile "com.github.czyzby:gdx-websocket-common:$libVersion.$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         
@@ -55,6 +56,8 @@ project(":html") {
 
     dependencies {
         compile project(":core")
+        compile "com.github.czyzby:gdx-websocket-gwt:$libVersion.$gdxVersion"
+        compile "com.github.czyzby:gdx-websocket-gwt:$libVersion.$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
@@ -68,7 +71,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        compile "com.github.czyzby:gdx-websocket:$libVersion.$gdxVersion"
     }
 }
 

@@ -48,7 +48,7 @@ public class LobbyModelImpl implements LobbyModel {
 	
 	private Label createMessageLabel() {
 		
-		return createLabel("", Color.GREEN, 200, Sizes.GAME_HEIGHT - 600, 2);
+		return createLabel("", Color.GREEN, 100, Sizes.GAME_HEIGHT - 540, 2);
 	}
 	
 	private void createButtons() {

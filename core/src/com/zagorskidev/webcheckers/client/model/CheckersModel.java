@@ -62,7 +62,7 @@ public class CheckersModel implements Model {
 	@Override
 	public void startGame(Color color) {
 		
-		inverted = color == Color.WHITE ? false : true;
+		inverted = color == Color.BLACK ? false : true;
 		gameModel = new GameModelImpl(stage, renderer, inverted);
 		setModel(ModelType.GAME);
 	}

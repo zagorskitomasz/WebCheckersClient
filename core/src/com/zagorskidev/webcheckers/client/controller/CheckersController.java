@@ -1,5 +1,6 @@
 package com.zagorskidev.webcheckers.client.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.zagorskidev.webcheckers.client.enums.ButtonType;
 import com.zagorskidev.webcheckers.client.enums.Color;
 import com.zagorskidev.webcheckers.client.enums.MsgCode;
@@ -146,7 +147,7 @@ public class CheckersController implements Controller{
 	public void executeMessageAction(Message message) {
 		
 		try {
-			execute(message);
+			Gdx.app.postRunnable(() -> execute(message));
 		}
 		catch(Exception exception) {
 			exception.printStackTrace();
@@ -158,6 +159,7 @@ public class CheckersController implements Controller{
 		switch(message.CODE) {
 		case GAME_CREATED:
 			waitForSecondPlayer();
+			break;
 		case GAME_STARTED:
 			startGame(message.gameID, message.ARGS[0]);
 			break;
@@ -233,6 +235,7 @@ public class CheckersController implements Controller{
 	
 	private void setActive() {
 		active = true;
+		model.setLabel("Your move!", com.badlogic.gdx.graphics.Color.BLACK);
 	}
 	
 	private void clearFields(String[] fields) {
@@ -248,6 +251,7 @@ public class CheckersController implements Controller{
 			SimpleChecker checker = SimpleChecker.parse(field);
 			model.addChecker(checker.position, checker.type, checker.promotion);
 		}
+		model.setLabel("", com.badlogic.gdx.graphics.Color.BLACK);
 	}
 	
 	private void selectChecker(String field) {

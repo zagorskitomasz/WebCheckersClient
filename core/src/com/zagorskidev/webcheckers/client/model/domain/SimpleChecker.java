@@ -26,7 +26,7 @@ public class SimpleChecker {
 	
 	public static SimpleChecker parse(String serialized) {
 		
-		String[] fields = serialized.split("$");
+		String[] fields = serialized.split("\\$");
 		
 		Position position = Position.parse(fields[0] + "$" + fields[1]);
 		Promotion promotion = Character.isUpperCase(fields[2].charAt(0)) ? Promotion.YES : Promotion.NO;

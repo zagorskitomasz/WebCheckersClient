@@ -1,12 +1,20 @@
 package com.zagorskidev.webcheckers.client.desktop;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.github.czyzby.websocket.CommonWebSockets;
 import com.zagorskidev.webcheckers.client.WebCheckers;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+		
+		CommonWebSockets.initiate();
+		createApplication();
+	}
+
+	private static Application createApplication() {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
 		config.title = "Web Checkers";
@@ -14,6 +22,6 @@ public class DesktopLauncher {
 		config.height = Sizes.GAME_HEIGHT;
 		config.width = Sizes.GAME_WIDTH;
 		
-		new LwjglApplication(new WebCheckers(), config);
+		return new LwjglApplication(new WebCheckers(), config);
 	}
 }
