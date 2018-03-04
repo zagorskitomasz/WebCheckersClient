@@ -1,7 +1,5 @@
 package com.zagorskidev.webcheckers.client.enums;
 
-import java.security.InvalidParameterException;
-
 public enum MsgCode {
 
 	CREATE_GAME("01"),
@@ -45,6 +43,6 @@ public enum MsgCode {
 			if(code.equals(msgCode.getCode()))
 				return msgCode;
 		}
-		throw new InvalidParameterException("String code unknown.");
+		throw new RuntimeException("String code unknown.");
 	}
 }

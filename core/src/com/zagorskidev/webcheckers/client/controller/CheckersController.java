@@ -185,7 +185,7 @@ public class CheckersController implements Controller{
 			selectChecker(message.ARGS[0]);
 			break;
 		case CHECKER_TO_KILL:
-			selectToKill(message.ARGS[0]);
+			selectToKill(message.ARGS);
 			break;
 		case INVALID_MOVE:
 			break;
@@ -222,15 +222,15 @@ public class CheckersController implements Controller{
 	}
 	
 	private void errorOccured() {
-		model.setLobbyLabel("Can't join game.", com.badlogic.gdx.graphics.Color.RED);
+		model.setLobbyLabel("Game doesn't exist.", com.badlogic.gdx.graphics.Color.RED);
 	}
 	
 	private void gameExists() {
-		model.setLobbyLabel("Game exists. Choose another name.", com.badlogic.gdx.graphics.Color.RED);
+		model.setLobbyLabel("Game exists.", com.badlogic.gdx.graphics.Color.RED);
 	}
 	
 	private void gameFull() {
-		model.setLobbyLabel("Game full. Join another game.", com.badlogic.gdx.graphics.Color.RED);
+		model.setLobbyLabel("Game full.", com.badlogic.gdx.graphics.Color.RED);
 	}
 	
 	private void setActive() {
@@ -259,8 +259,9 @@ public class CheckersController implements Controller{
 		model.selectChecker(Position.parse(field));
 	}
 	
-	private void selectToKill(String field) {
-		model.selectCheckerToKill(Position.parse(field));
+	private void selectToKill(String[] fields) {
+		for(String field : fields)
+			model.selectCheckerToKill(Position.parse(field));
 	}
 	
 	private void won() {

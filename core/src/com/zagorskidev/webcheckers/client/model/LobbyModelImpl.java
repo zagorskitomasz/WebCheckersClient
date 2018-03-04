@@ -81,6 +81,7 @@ public class LobbyModelImpl implements LobbyModel {
 	public void draw() {
 		createButton.draw();
 		joinButton.draw();
+		messageLabel.act(0);
 		stage.act();
 		stage.draw();
 	}

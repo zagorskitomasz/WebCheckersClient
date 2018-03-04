@@ -36,9 +36,6 @@ public class WebCheckers extends ApplicationAdapter {
 		
 		Messager messagesDispatcher = prepareMessager();
 		Gdx.app.postRunnable(messagesDispatcher);
-		
-		Thread messagesDispatcherThread = new Thread(messagesDispatcher);
-		messagesDispatcherThread.start();
 	}
 
 	private Messager prepareMessager() {

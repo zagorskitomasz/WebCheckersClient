@@ -18,7 +18,7 @@ public class CheckersMessager implements Messager {
 	public void run() {
 		WebSocketListener adapter = new WebSocketsListenerImpl(consumer);
 		
-		socket = WebSockets.newSocket("ws://127.0.0.1:8080/checkers/websocket");
+		socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
 		socket.addListener(adapter);
 		socket.connect();
 	}

@@ -1,7 +1,6 @@
 package com.zagorskidev.webcheckers.client.messages;
 
 import java.io.Serializable;
-import java.security.InvalidParameterException;
 
 import com.zagorskidev.webcheckers.client.enums.MsgCode;
 import com.zagorskidev.webcheckers.client.util.GameID;
@@ -70,7 +69,7 @@ public class Message implements Serializable {
 
 			return message;
 		} catch (Exception ex) {
-			throw new InvalidParameterException("Deserialization failed");
+			throw new RuntimeException("Deserialization failed");
 		}
 	}
 

@@ -1,7 +1,5 @@
 package com.zagorskidev.webcheckers.client.controller;
 
-import java.util.concurrent.Semaphore;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.zagorskidev.webcheckers.client.enums.MsgCode;
@@ -11,18 +9,16 @@ import com.zagorskidev.webcheckers.client.messages.MessagesProducer;
 import com.zagorskidev.webcheckers.client.util.GameID;
 
 public class GameRequester implements TextInputListener, MessagesProducer {
-
-	private static final int MAX_PARALLEL_REQUESTS = 1;
 	
 	private Messager messager;
-	private Semaphore semaphore;
+	private boolean requestInProgress;
 	
 	private String name;
 	private String password;
 	private MsgCode code;
 	
 	public GameRequester() {
-		semaphore = new Semaphore(MAX_PARALLEL_REQUESTS);
+		requestInProgress = false;
 	}
 
 	@Override
@@ -32,7 +28,9 @@ public class GameRequester implements TextInputListener, MessagesProducer {
 	
 	public void executeMessage(MsgCode code) {
 		
-		if(semaphore.tryAcquire()) {
+		if(!requestInProgress) {
+			
+			requestInProgress = true;
 			init(code);
 			addName();
 		}
@@ -81,7 +79,7 @@ public class GameRequester implements TextInputListener, MessagesProducer {
 		
 		GameID gameID = buildID();
 		
-		semaphore.release();
+		requestInProgress = false;
 		
 		Message message = new Message(code, gameID, (String[])null);
 		messager.sendMessage(message);
@@ -98,6 +96,6 @@ public class GameRequester implements TextInputListener, MessagesProducer {
 		password = null;
 		code = null;
 		
-		semaphore.release();
+		requestInProgress = false;
 	}
 }

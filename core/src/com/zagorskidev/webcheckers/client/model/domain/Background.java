@@ -54,6 +54,7 @@ public class Background implements Drawable {
 		drawLayer1();
 		drawLayer2();
 		
+		label.act(0);
 		stage.act();
 		stage.draw();
 	}
