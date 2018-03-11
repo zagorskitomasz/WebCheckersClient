@@ -42,6 +42,7 @@ public class CheckersModel implements Model {
 	private boolean inverted;
 	private GameID gameID;
 	private boolean gameOver;
+	private boolean waitingForPlayer;
 	
 	private CheckersModel() {
 		
@@ -55,6 +56,7 @@ public class CheckersModel implements Model {
 	@Override
 	public void createGame() {
 		
+		waitingForPlayer = false;
 		waitingModel = new WaitingModelImpl(stage);
 		setModel(ModelType.WAITING);
 	}
@@ -103,6 +105,7 @@ public class CheckersModel implements Model {
 			break;
 		case WAITING:
 			view = waitingModel;
+			break;
 		default:
 			break;
 		}
@@ -143,8 +146,6 @@ public class CheckersModel implements Model {
 		 gameModel.setLabel(text, color);
 	}
 	
-
-	
 	@Override
 	public void setLobbyLabel(String text, com.badlogic.gdx.graphics.Color color) {
 		 lobbyModel.setLobbyLabel(text, color);
@@ -178,6 +179,44 @@ public class CheckersModel implements Model {
 			return null;
 		
 		return lobbyModel.recognizeClickedButton(xClick, yClick);
+	}
+	
+	@Override
+	public void disconnected() {
+		
+		if(isDuringGame()) {
+			gameOver("Server disconnected...", com.badlogic.gdx.graphics.Color.RED);
+			return;
+		}
+		else if(!isInLobby())
+			createLobby();
+		
+		setLobbyLabel("Server disconnected...", com.badlogic.gdx.graphics.Color.RED);	
+	}
+	
+	@Override
+	public void connected() {
+		
+		if(isDuringGame())
+			setLabel("Connected!", com.badlogic.gdx.graphics.Color.GREEN);
+		else if(!isInLobby())
+			setModel(ModelType.LOBBY);
+		
+		setLobbyLabel("Connected!", com.badlogic.gdx.graphics.Color.GREEN);	
+	}
+	
+	@Override
+	public void playerDisconnected(String color) {
+		
+		if(!isDuringGame())
+			return;
+		
+		setLabel("2nd player disconnected...", com.badlogic.gdx.graphics.Color.RED);
+		waitingForPlayer = true;
+	}
+	
+	public boolean isWaiting() {
+		return waitingForPlayer;
 	}
 	
 	@Override

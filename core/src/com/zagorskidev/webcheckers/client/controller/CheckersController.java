@@ -37,6 +37,10 @@ public class CheckersController implements Controller{
 			return null;
 		}
 		
+		if(model.isWaiting()) {
+			waitForSecondPlayer();
+		}
+		
 		Position clickedField = recognizeField(xClick, yClick);
 		
 		if(clickedField != null && active) {
@@ -163,14 +167,17 @@ public class CheckersController implements Controller{
 		case GAME_STARTED:
 			startGame(message.gameID, message.ARGS[0]);
 			break;
-		case ERROR:
-			errorOccured();
+		case GAME_NOT_EXIST:
+			notExist();
 			break;
 		case GAME_EXISTS:
 			gameExists();
 			break;
 		case GAME_FULL:
 			gameFull();
+			break;
+		case ERROR:
+			errorOccured();
 			break;
 		case YOUR_MOVE:
 			setActive();
@@ -201,6 +208,15 @@ public class CheckersController implements Controller{
 		case TIME_OUT:
 			connectionTimedOut();
 			break;
+		case DISCONNECTED:
+			disconnected();
+			break;
+		case PLAYER_DISCONNECTED:
+			playerDisconnected(message.ARGS[0]);
+			break;
+		case CONNECTED:
+			connected();
+			break;
 		default:
 			break;
 		}
@@ -221,7 +237,7 @@ public class CheckersController implements Controller{
 		model.startGame(color);
 	}
 	
-	private void errorOccured() {
+	private void notExist() {
 		model.setLobbyLabel("Game doesn't exist.", com.badlogic.gdx.graphics.Color.RED);
 	}
 	
@@ -231,6 +247,10 @@ public class CheckersController implements Controller{
 	
 	private void gameFull() {
 		model.setLobbyLabel("Game full.", com.badlogic.gdx.graphics.Color.RED);
+	}
+	
+	private void errorOccured() {
+		model.setLobbyLabel("Error occured...", com.badlogic.gdx.graphics.Color.RED);
 	}
 	
 	private void setActive() {
@@ -278,5 +298,17 @@ public class CheckersController implements Controller{
 	
 	private void connectionTimedOut() {
 		model.gameOver("Connection timed out...", com.badlogic.gdx.graphics.Color.RED);
+	}
+	
+	private void disconnected() {
+		model.disconnected();
+	}
+	
+	private void playerDisconnected(String color) {
+		model.playerDisconnected(color);
+	}
+	
+	private void connected() {
+		model.connected();
 	}
 }

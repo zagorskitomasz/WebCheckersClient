@@ -9,4 +9,6 @@ public interface Messager extends Runnable{
 
 	public void sendMessage(Message message);
 	public void registerMessagesConsumer(MessagesConsumer consumer);
+	public void tryConnect();
+	public void disconnected();
 }

@@ -3,6 +3,7 @@ package com.zagorskidev.webcheckers.client.messages;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
+import com.github.czyzby.websocket.data.WebSocketException;
 
 /**
  * Straight implementation.
@@ -13,14 +14,29 @@ public class CheckersMessager implements Messager {
 
 	private MessagesConsumer consumer;
 	private WebSocket socket;
+	private WebSocketListener adapter;
+	
+	private boolean connected = false;
 	
 	@Override
 	public void run() {
-		WebSocketListener adapter = new WebSocketsListenerImpl(consumer);
+		adapter = new WebSocketsListenerImpl(consumer, this);
 		
 		socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
+		//socket = WebSockets.newSocket("ws://localhost:8080/checkers/websocket");
 		socket.addListener(adapter);
-		socket.connect();
+	}
+
+	private void connect() {
+		
+		try {
+			socket.connect();
+			connected = true;
+		}
+		catch(WebSocketException exception) {
+			exception.printStackTrace();
+			adapter.onError(socket, exception);
+		}
 	}
 
 	@Override
@@ -33,4 +49,15 @@ public class CheckersMessager implements Messager {
 		this.consumer = consumer;
 	}
 
+	@Override
+	public void tryConnect() {
+		
+		if(!connected)
+			connect();
+	}
+	
+	@Override
+	public void disconnected() {
+		connected = false;
+	}
 }

@@ -20,4 +20,8 @@ public interface Model extends LobbyModel, GameModel, WaitingModel{
 	public boolean isGameOver();
 	public boolean isDuringGame();
 	public boolean isInLobby();
+	public boolean isWaiting();
+	public void disconnected();
+	public void connected();
+	public void playerDisconnected(String color);
 }
