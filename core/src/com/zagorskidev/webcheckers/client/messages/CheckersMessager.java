@@ -30,7 +30,7 @@ public class CheckersMessager implements Messager {
 		socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
 		//socket = WebSockets.newSocket("ws://localhost:8080/checkers/websocket");
 		socket.addListener(adapter);
-		lastConnectionCheck = System.currentTimeMillis() - CHECK_INTERVAL;
+		lastConnectionCheck = TimeUtils.millis() - CHECK_INTERVAL;
 	}
 
 	private void connect() {
@@ -48,7 +48,7 @@ public class CheckersMessager implements Messager {
 	@Override
 	public void sendMessage(Message message) {
 		
-		if(socket != null && connected)
+		if(socket != null && connected && socket.isOpen())
 			socket.send(message.serialize());
 	}
 
