@@ -111,4 +111,22 @@ public class Board implements Drawable {
 		stage.dispose();
 		renderer.dispose();
 	}
+
+	public void invert(boolean inverted) {
+		
+		BoardField[][] tempBoard = new BoardField[board.length][board.length];
+		
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board.length; j++) {
+				
+				tempBoard[i][j] = board[i][j];
+
+				if(!inverted) 
+					tempBoard[i][j].setPosition(i, j);
+				else 
+					tempBoard[i][j].setPosition(maxFieldIndex() - i, maxFieldIndex() - j);
+			}
+		}
+		board = tempBoard;
+	}
 }

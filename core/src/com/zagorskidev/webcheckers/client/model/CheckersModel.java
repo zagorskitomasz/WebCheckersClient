@@ -175,34 +175,32 @@ public class CheckersModel implements Model {
 	@Override
 	public ButtonType recognizeClickedButton(int xClick, int yClick) {
 		
-		if(!isInLobby())
-			return null;
+		if(isInLobby())
+			return lobbyModel.recognizeClickedButton(xClick, yClick);
+		else if(isDuringGame())
+			return gameModel.recognizeClickedButton(xClick,yClick);
 		
-		return lobbyModel.recognizeClickedButton(xClick, yClick);
+		return null;
 	}
 	
 	@Override
 	public void disconnected() {
 		
 		if(isDuringGame()) {
-			gameOver("Server disconnected...", com.badlogic.gdx.graphics.Color.RED);
+			gameOver("Disconnected...", com.badlogic.gdx.graphics.Color.RED);
 			return;
 		}
 		else if(!isInLobby())
 			createLobby();
 		
-		setLobbyLabel("Server disconnected...", com.badlogic.gdx.graphics.Color.RED);	
+		setLobbyLabel("Disconnected...", com.badlogic.gdx.graphics.Color.RED);	
 	}
 	
 	@Override
 	public void connected() {
 		
-		if(isDuringGame())
-			setLabel("Connected!", com.badlogic.gdx.graphics.Color.GREEN);
-		else if(!isInLobby())
-			setModel(ModelType.LOBBY);
-		
-		setLobbyLabel("Connected!", com.badlogic.gdx.graphics.Color.GREEN);	
+		if(isInLobby())		
+			setLobbyLabel("Connected!", com.badlogic.gdx.graphics.Color.GREEN);	
 	}
 	
 	@Override
@@ -217,6 +215,14 @@ public class CheckersModel implements Model {
 	
 	public boolean isWaiting() {
 		return waitingForPlayer;
+	}
+	
+	@Override
+	public void invert(){
+		if(isDuringGame()) {
+			inverted = !inverted;
+			gameModel.invert(inverted);
+		}
 	}
 	
 	@Override

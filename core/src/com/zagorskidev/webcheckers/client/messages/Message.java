@@ -46,7 +46,8 @@ public class Message implements Serializable {
 
 	private void appendCode(StringBuilder stringBuilder) {
 
-		stringBuilder.append(CODE.getCode() + " ");
+		if(CODE != null)
+			stringBuilder.append(CODE.getCode() + " ");
 	}
 
 	private void appendArgs(StringBuilder stringBuilder) {

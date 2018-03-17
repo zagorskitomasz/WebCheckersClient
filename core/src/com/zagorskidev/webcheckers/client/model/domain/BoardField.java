@@ -12,8 +12,8 @@ import com.zagorskidev.webcheckers.client.enums.field.Selection;
 
 public class BoardField implements Drawable{
 	
-	private final int X;
-	private final int Y;
+	private int X;
+	private int Y;
 	
 	private ShapeRenderer renderer;
 	
@@ -33,6 +33,11 @@ public class BoardField implements Drawable{
 		checker = Checker.NONE;
 		selection = Selection.NONE;
 		promotion = Promotion.NO;
+	}
+
+	public void setPosition(int x, int y) {
+		X = x * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET;
+		Y = Sizes.GAME_HEIGHT - ((y + 1) * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET);
 	}
 	
 	public void setChecker(Checker checker) {

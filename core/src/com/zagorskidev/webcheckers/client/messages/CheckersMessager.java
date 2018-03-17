@@ -1,9 +1,11 @@
 package com.zagorskidev.webcheckers.client.messages;
 
+import com.badlogic.gdx.utils.TimeUtils;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketException;
+import com.zagorskidev.webcheckers.client.enums.MsgCode;
 
 /**
  * Straight implementation.
@@ -12,19 +14,23 @@ import com.github.czyzby.websocket.data.WebSocketException;
  */
 public class CheckersMessager implements Messager {
 
+	private static final long CHECK_INTERVAL = 5000;
+	
 	private MessagesConsumer consumer;
 	private WebSocket socket;
 	private WebSocketListener adapter;
 	
+	private long lastConnectionCheck;
 	private boolean connected = false;
 	
 	@Override
-	public void run() {
+	public void startWritingReadingThreads() {
 		adapter = new WebSocketsListenerImpl(consumer, this);
 		
 		socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
 		//socket = WebSockets.newSocket("ws://localhost:8080/checkers/websocket");
 		socket.addListener(adapter);
+		lastConnectionCheck = System.currentTimeMillis() - CHECK_INTERVAL;
 	}
 
 	private void connect() {
@@ -41,23 +47,47 @@ public class CheckersMessager implements Messager {
 
 	@Override
 	public void sendMessage(Message message) {
-		socket.send(message.serialize());
+		
+		if(socket != null && connected)
+			socket.send(message.serialize());
 	}
 
 	@Override
 	public void registerMessagesConsumer(MessagesConsumer consumer) {
 		this.consumer = consumer;
 	}
-
-	@Override
-	public void tryConnect() {
-		
-		if(!connected)
-			connect();
-	}
 	
 	@Override
 	public void disconnected() {
 		connected = false;
+	}
+	
+	@Override
+	public void checkConnection(){
+			
+		long currentTime = TimeUtils.millis();
+			
+		if(lastConnectionCheck + CHECK_INTERVAL < currentTime) {
+			lastConnectionCheck = currentTime;
+			tryConnect();
+			ping();
+			notifyConnection();
+		}
+	}
+
+	private void tryConnect() {
+		
+		if(!connected)
+			connect();
+	}	
+	
+	private void ping(){
+		
+		Message ping = new Message(null);
+		sendMessage(ping);
+	}
+	
+	private void notifyConnection(){
+		consumer.consume(new Message(connected ? MsgCode.CONNECTED : MsgCode.DISCONNECTED, null, (String[])null));
 	}
 }

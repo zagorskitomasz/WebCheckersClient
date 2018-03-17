@@ -10,4 +10,6 @@ public class Sizes {
 	public static final int GAME_HEIGHT = GAME_WIDTH + BOARD_MSG;
 	public static final int BUTTON_SIZE_X = 240;
 	public static final int BUTTON_SIZE_Y = 100;
+	public static final int SM_BUTTON_SIZE_X = 70;
+	public static final int SM_BUTTON_SIZE_Y = 70;
 }

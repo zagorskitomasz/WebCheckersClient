@@ -5,10 +5,11 @@ package com.zagorskidev.webcheckers.client.messages;
  * @author tomek
  *
  */
-public interface Messager extends Runnable{
+public interface Messager{
 
 	public void sendMessage(Message message);
 	public void registerMessagesConsumer(MessagesConsumer consumer);
-	public void tryConnect();
+	public void startWritingReadingThreads();
+	public void checkConnection();
 	public void disconnected();
 }

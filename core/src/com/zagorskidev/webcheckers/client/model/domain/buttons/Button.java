@@ -11,11 +11,11 @@ import com.zagorskidev.webcheckers.client.enums.Sizes;
 
 public abstract class Button implements Drawable{
 
-	private int xPos;
-	private int yPos;
+	protected int xPos;
+	protected int yPos;
 	
-	private Stage stage;
-	private ShapeRenderer renderer;
+	protected Stage stage;
+	protected ShapeRenderer renderer;
 	
 	protected Button(Stage stage, ShapeRenderer renderer) {
 	

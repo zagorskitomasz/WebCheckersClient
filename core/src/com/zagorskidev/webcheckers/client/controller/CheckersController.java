@@ -43,17 +43,13 @@ public class CheckersController implements Controller{
 		
 		Position clickedField = recognizeField(xClick, yClick);
 		
-		if(clickedField != null && active) {
-			if(isValidField(clickedField))
-				return createFieldMessage(clickedField);
-			else
-				return null;
-		}
+		if(clickedField != null && active && isValidField(clickedField))
+			return createFieldMessage(clickedField);
 		
 		ButtonType clickedButton = recognizeButton(xClick, yClick);
 		
 		if(clickedButton != null)
-			executeButtonMessage(clickedButton);
+			return executeButtonMessage(clickedButton);
 		
 		return null;
 	}
@@ -130,6 +126,14 @@ public class CheckersController implements Controller{
 		return message;
 	}
 	
+	private Message createInvertMessage() {
+		
+		GameID gameID = model.getGameID();
+		Message message = new Message(MsgCode.INVERT, gameID, (String[])null);
+		
+		return message;
+	}
+	
 	private ButtonType recognizeButton(int xClick, int yClick) {
 		
 		return model.recognizeClickedButton(xClick, yClick);
@@ -139,9 +143,17 @@ public class CheckersController implements Controller{
 		
 		switch(button) {
 		case CREATE:
-			requester.executeMessage(MsgCode.CREATE_GAME);
+			if(model.isInLobby())
+				requester.executeMessage(MsgCode.CREATE_GAME);
+			return null;
 		case JOIN:
-			requester.executeMessage(MsgCode.JOIN_GAME);
+			if(model.isInLobby())
+				requester.executeMessage(MsgCode.JOIN_GAME);
+			return null;
+		case INVERT:
+			if(model.isDuringGame())
+				return createInvertMessage();
+			return null;
 		default:
 			return null;
 		}
@@ -216,6 +228,9 @@ public class CheckersController implements Controller{
 			break;
 		case CONNECTED:
 			connected();
+			break;
+		case INVERTED:
+			invert();
 			break;
 		default:
 			break;
@@ -310,5 +325,9 @@ public class CheckersController implements Controller{
 	
 	private void connected() {
 		model.connected();
+	}
+	
+	private void invert() {
+		model.invert();
 	}
 }
