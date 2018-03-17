@@ -9,7 +9,7 @@ public interface Messager{
 
 	public void sendMessage(Message message);
 	public void registerMessagesConsumer(MessagesConsumer consumer);
-	public void startWritingReadingThreads();
+	public void startWriteReadThreads();
 	public void checkConnection();
 	public void disconnected();
 }

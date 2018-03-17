@@ -40,7 +40,7 @@ public class WebCheckers extends ApplicationAdapter {
 		messagesDispatcher.registerMessagesConsumer(gameManager);
 		gameManager.registerMessagesSender(messagesDispatcher);
 		
-		messagesDispatcher.startWritingReadingThreads();
+		messagesDispatcher.startWriteReadThreads();
 	}
 
 	@Override

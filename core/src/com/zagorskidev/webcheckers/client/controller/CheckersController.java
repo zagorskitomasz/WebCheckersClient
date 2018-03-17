@@ -192,7 +192,7 @@ public class CheckersController implements Controller{
 			errorOccured();
 			break;
 		case YOUR_MOVE:
-			setActive();
+			setActive(true);
 			break;
 		case CHECKER_OFF_FIELD:
 			clearFields(message.ARGS);
@@ -232,6 +232,9 @@ public class CheckersController implements Controller{
 		case INVERTED:
 			invert();
 			break;
+		case DEACTIVATE:
+			setActive(false);
+			break;
 		default:
 			break;
 		}
@@ -268,9 +271,12 @@ public class CheckersController implements Controller{
 		model.setLobbyLabel("Error occured...", com.badlogic.gdx.graphics.Color.RED);
 	}
 	
-	private void setActive() {
-		active = true;
-		model.setLabel("Your move!", com.badlogic.gdx.graphics.Color.BLACK);
+	private void setActive(boolean active) {
+		this.active = active;
+		if(active)
+			model.setLabel("Your move!", com.badlogic.gdx.graphics.Color.BLACK);
+		else
+			model.setLabel("", com.badlogic.gdx.graphics.Color.BLACK);
 	}
 	
 	private void clearFields(String[] fields) {

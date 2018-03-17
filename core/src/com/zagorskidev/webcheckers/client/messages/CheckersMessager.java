@@ -24,7 +24,7 @@ public class CheckersMessager implements Messager {
 	private boolean connected = false;
 	
 	@Override
-	public void startWritingReadingThreads() {
+	public void startWriteReadThreads() {
 		adapter = new WebSocketsListenerImpl(consumer, this);
 		
 		socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
