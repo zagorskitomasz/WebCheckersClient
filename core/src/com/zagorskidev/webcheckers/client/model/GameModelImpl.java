@@ -87,5 +87,11 @@ public class GameModelImpl implements GameModel {
 	@Override
 	public void invert(boolean inverted){
 		board.invert(inverted);
+		invertButton.highlight(false);
+	}
+	
+	@Override
+	public void invertRequest(){
+		invertButton.highlight(true);
 	}
 }

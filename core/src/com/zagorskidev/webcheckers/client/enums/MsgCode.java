@@ -34,7 +34,8 @@ public enum MsgCode {
 	PLAYER_DISCONNECTED("42"), 
 	
 	INVERT("50"),
-	INVERTED("51");
+	INVERTED("51"), 
+	INVERT_REQUEST("52");
 	
 	private String code;
 	

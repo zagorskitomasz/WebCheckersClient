@@ -8,6 +8,8 @@ import com.zagorskidev.webcheckers.client.enums.Sizes;
 
 public class InvertButton extends Button {
 	
+	
+	
 	public InvertButton (Stage stage, ShapeRenderer renderer) {
 		
 		super(stage, renderer);
@@ -19,9 +21,24 @@ public class InvertButton extends Button {
 	@Override
 	public void draw() {
 		
+		drawButton();
+		if(isHighlighted())
+			drawHighlight();
+	}
+
+	private void drawButton() {
+		
 		renderer.setColor(Color.BLUE);
 		renderer.begin(ShapeType.Filled);
 		renderer.rect(xPos, yPos, Sizes.SM_BUTTON_SIZE_X, Sizes.SM_BUTTON_SIZE_Y);
+		renderer.end();
+	}
+
+	private void drawHighlight() {
+		
+		renderer.setColor(Color.YELLOW);
+		renderer.begin(ShapeType.Filled);
+		renderer.rect(xPos + 15, yPos + 15, Sizes.SM_BUTTON_SIZE_X - 30, Sizes.SM_BUTTON_SIZE_Y - 30);
 		renderer.end();
 	}
 	

@@ -22,4 +22,5 @@ public interface GameModel extends Drawable{
 	public void setLabel(String text, Color color);
 	public ButtonType recognizeClickedButton(int xClick, int yClick);
 	default public void invert(boolean inverted) {}
+	public void invertRequest();
 }

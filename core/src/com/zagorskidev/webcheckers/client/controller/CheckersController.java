@@ -232,6 +232,9 @@ public class CheckersController implements Controller{
 		case INVERTED:
 			invert();
 			break;
+		case INVERT_REQUEST:
+			invertRequest();
+			break;
 		case DEACTIVATE:
 			setActive(false);
 			break;
@@ -335,5 +338,9 @@ public class CheckersController implements Controller{
 	
 	private void invert() {
 		model.invert();
+	}
+	
+	private void invertRequest() {
+		model.invertRequest();
 	}
 }

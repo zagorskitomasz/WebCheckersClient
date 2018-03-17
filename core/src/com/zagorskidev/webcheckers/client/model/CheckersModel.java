@@ -226,6 +226,13 @@ public class CheckersModel implements Model {
 	}
 	
 	@Override
+	public void invertRequest(){
+		if(isDuringGame()) {
+			gameModel.invertRequest();
+		}
+	}
+	
+	@Override
 	public void draw() {
 		if(view != null)
 			view.draw();

@@ -17,6 +17,7 @@ public class WebSocketsListenerImpl extends WebSocketAdapter {
 			throw new WebSocketException("MessagesConsumer not initialized.");
 
 		this.consumer = consumer;
+		this.messager = messager;
 	}
 
 	@Override

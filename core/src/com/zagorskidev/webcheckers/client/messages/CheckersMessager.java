@@ -27,8 +27,8 @@ public class CheckersMessager implements Messager {
 	public void startWriteReadThreads() {
 		adapter = new WebSocketsListenerImpl(consumer, this);
 		
-		socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
-		//socket = WebSockets.newSocket("ws://localhost:8080/checkers/websocket");
+		//socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
+		socket = WebSockets.newSocket("ws://localhost:8080/checkers/websocket");
 		socket.addListener(adapter);
 		lastConnectionCheck = System.currentTimeMillis() - CHECK_INTERVAL;
 	}

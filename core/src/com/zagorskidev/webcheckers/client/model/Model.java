@@ -25,4 +25,5 @@ public interface Model extends LobbyModel, GameModel, WaitingModel{
 	public void connected();
 	public void playerDisconnected(String color);
 	public void invert();
+	public void invertRequest();
 }

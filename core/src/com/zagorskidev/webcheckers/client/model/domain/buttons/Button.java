@@ -14,6 +14,8 @@ public abstract class Button implements Drawable{
 	protected int xPos;
 	protected int yPos;
 	
+	private boolean highlighted;
+	
 	protected Stage stage;
 	protected ShapeRenderer renderer;
 	
@@ -21,6 +23,7 @@ public abstract class Button implements Drawable{
 	
 		this.stage = stage;
 		this.renderer = renderer;
+		highlighted = false;
 	}
 	
 	protected void initialize(int xPos, int yPos) {
@@ -58,5 +61,13 @@ public abstract class Button implements Drawable{
 				xClick <= xPos + Sizes.BUTTON_SIZE_X &&
 				yClick <= Sizes.GAME_HEIGHT - yPos && 
 				yClick >= Sizes.GAME_HEIGHT - (yPos + Sizes.BUTTON_SIZE_Y);
+	}
+
+	public void highlight(boolean highlight) {
+		highlighted = highlight;
+	}
+	
+	public boolean isHighlighted() {
+		return highlighted;
 	}
 }
