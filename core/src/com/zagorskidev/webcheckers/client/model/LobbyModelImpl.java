@@ -1,12 +1,11 @@
 package com.zagorskidev.webcheckers.client.model;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.zagorskidev.webcheckers.client.enums.ButtonType;
+import com.zagorskidev.webcheckers.client.enums.ConnectionMsg;
+import com.zagorskidev.webcheckers.client.enums.LobbyMsg;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
+import com.zagorskidev.webcheckers.client.graphics.Drawer;
+import com.zagorskidev.webcheckers.client.graphics.Sprites;
 import com.zagorskidev.webcheckers.client.model.domain.buttons.Button;
 import com.zagorskidev.webcheckers.client.model.domain.buttons.CreateButton;
 import com.zagorskidev.webcheckers.client.model.domain.buttons.JoinButton;
@@ -17,79 +16,39 @@ import com.zagorskidev.webcheckers.client.model.domain.buttons.JoinButton;
  *
  */
 public class LobbyModelImpl implements LobbyModel {
-
-	private Stage stage;
-	private ShapeRenderer renderer;
 	
 	private Button createButton;
 	private Button joinButton;
 	
-	private Label titleLabel;
-	private Label messageLabel;
+	private LobbyMsg lobbyMsg;
+	private ConnectionMsg connectionMsg;
 	
-	public LobbyModelImpl(Stage stage, ShapeRenderer renderer) {
+	private Drawer drawer;
+	
+	public LobbyModelImpl() {
 		
-		this.stage = stage;
-		this.renderer = renderer;
-		
-		stage.clear();
-		
-		titleLabel = createTitleLabel();
-		messageLabel = createMessageLabel();
+		drawer = Drawer.getInstance();
 		createButtons();
-		addLabels();
-		
-	}
-	
-	private Label createTitleLabel() {
-		
-		return createLabel("Web Checkers", Color.GREEN, 0, Sizes.GAME_HEIGHT - 100, 3);
-	}
-	
-	private Label createMessageLabel() {
-		
-		return createLabel("", Color.GREEN, 100, Sizes.GAME_HEIGHT - 540, 2);
 	}
 	
 	private void createButtons() {
 		
-		createButton = new CreateButton(stage, renderer);
-		joinButton = new JoinButton(stage, renderer);
-	}
-	
-	private Label createLabel(String text, Color color, float moveLeft, float y, float fontSize) {
-		
-		Label.LabelStyle labelStyle = new Label.LabelStyle();
-		labelStyle.font = new BitmapFont();
-
-		Label label;
-		label = new Label(text,labelStyle);
-		label.setFontScale(fontSize, fontSize);
-		label.setColor(color);
-		label.setPosition(Sizes.GAME_WIDTH / 2 - fontSize * label.getWidth() / 2 - moveLeft, y);
-		
-		return label;
-	}
-	
-	private void addLabels() {
-
-		stage.addActor(titleLabel);
-		stage.addActor(messageLabel);
+		createButton = new CreateButton();
+		joinButton = new JoinButton();
 	}
 	
 	@Override
 	public void draw() {
+		
+		drawer.draw(Sprites.BACKGROUND, 0, 0);
+		drawer.draw(Sprites.TITLE_PL, 0, Sizes.GAME_HEIGHT - 320);
 		createButton.draw();
 		joinButton.draw();
-		messageLabel.act(0);
-		stage.act();
-		stage.draw();
-	}
-	
-	@Override
-	public void dispose() {
-		stage.dispose();
-		renderer.dispose();
+		
+		if(lobbyMsg != null)
+			drawer.draw(lobbyMsg.getSprite(), 0, 80);
+		if(connectionMsg != null)
+			drawer.draw(connectionMsg.getSprite(), 0, 10);
 	}
 
 	@Override
@@ -103,10 +62,22 @@ public class LobbyModelImpl implements LobbyModel {
 		
 		return null;
 	}
-	
-	public void setLobbyLabel(String text, Color color) {
+
+	@Override
+	public void setLobbyMsg(LobbyMsg msg) {
 		
-		messageLabel.setText(text);
-		messageLabel.setColor(color);
+		lobbyMsg = msg;
+	}
+
+	@Override
+	public void disconnected() {
+		
+		connectionMsg = ConnectionMsg.CONNECTION_NOT;
+	}
+
+	@Override
+	public void connected() {
+		
+		connectionMsg = ConnectionMsg.CONNECTION_OK;
 	}
 }

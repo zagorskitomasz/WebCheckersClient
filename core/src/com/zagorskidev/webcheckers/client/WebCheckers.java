@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
+import com.zagorskidev.webcheckers.client.graphics.Drawer;
 import com.zagorskidev.webcheckers.client.manager.CheckersManager;
 import com.zagorskidev.webcheckers.client.manager.GameManager;
 import com.zagorskidev.webcheckers.client.messages.CheckersMessager;
@@ -20,6 +21,8 @@ public class WebCheckers extends ApplicationAdapter {
 	private GameManager gameManager;
 	private Drawable gameModel;
 	private Messager messagesDispatcher;
+	
+	private Drawer drawer;
 		
 	@Override
 	public void create () {
@@ -31,6 +34,7 @@ public class WebCheckers extends ApplicationAdapter {
 	private void initializeGame() {
 		gameManager = new CheckersManager();
 		gameModel = CheckersModel.getInstance();
+		drawer = Drawer.getInstance();
 	}
 
 	private void initializeMessager() {
@@ -40,14 +44,19 @@ public class WebCheckers extends ApplicationAdapter {
 		messagesDispatcher.registerMessagesConsumer(gameManager);
 		gameManager.registerMessagesSender(messagesDispatcher);
 		
-		messagesDispatcher.startWriteReadThreads();
+		Gdx.app.postRunnable(() -> messagesDispatcher.startWriteReadThreads());
 	}
 
 	@Override
 	public void render () {
+		
 		messagesDispatcher.checkConnection();
+		
 		clear();
+		
+		drawer.beginFrame();
 		gameModel.draw();
+		drawer.endFrame();
 	}
 	
 	private void clear() {
@@ -57,6 +66,6 @@ public class WebCheckers extends ApplicationAdapter {
 	
 	@Override
 	public void dispose () {
-		gameModel.dispose();
+		Drawer.getInstance().dispose();
 	}
 }

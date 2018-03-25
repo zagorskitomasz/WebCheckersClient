@@ -1,66 +1,44 @@
 package com.zagorskidev.webcheckers.client.model.domain.buttons;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
+import com.zagorskidev.webcheckers.client.graphics.Drawer;
 
 public abstract class Button implements Drawable{
 
-	protected int xPos;
+	protected Drawer drawer;
+	
 	protected int yPos;
+	protected int xFrom;
+	protected int xTo;
+	protected int yFrom;
+	protected int yTo;
 	
 	private boolean highlighted;
 	
-	protected Stage stage;
-	protected ShapeRenderer renderer;
+	protected Button() {
 	
-	protected Button(Stage stage, ShapeRenderer renderer) {
-	
-		this.stage = stage;
-		this.renderer = renderer;
+		drawer = Drawer.getInstance();
+		
 		highlighted = false;
 	}
 	
-	protected void initialize(int xPos, int yPos) {
+	protected void initialize(int yPos) {
 		
-		this.xPos = xPos;
 		this.yPos = yPos;
-	}
-	
-	protected void createLabel(String text, Color color, float moveLeft, float y, float fontSize) {
 		
-		Label.LabelStyle labelStyle = new Label.LabelStyle();
-		labelStyle.font = new BitmapFont();
-
-		Label label;
-		label = new Label(text,labelStyle);
-		label.setFontScale(fontSize, fontSize);
-		label.setColor(color);
-		label.setPosition(Sizes.GAME_WIDTH / 2 - fontSize * label.getWidth() / 2 - moveLeft, y);
-		
-		stage.addActor(label);
-	}
-	
-	@Override
-	public void draw() {
-		
-		renderer.setColor(Color.YELLOW);
-		renderer.begin(ShapeType.Filled);
-		renderer.rect(xPos, yPos, Sizes.BUTTON_SIZE_X, Sizes.BUTTON_SIZE_Y);
-		renderer.end();
+		xFrom = (Sizes.GAME_WIDTH - Sizes.BUTTON_SIZE_X) / 2;
+		xTo = xFrom + Sizes.BUTTON_SIZE_X;
+		yFrom = yPos + (Sizes.BUTTON_PANEL_SIZE_Y - Sizes.BUTTON_SIZE_Y) /2;
+		yTo = yFrom + Sizes.BUTTON_SIZE_Y;
 	}
 	
 	public boolean wasClicked(int xClick, int yClick) {
 		
-		return xClick >= xPos && 
-				xClick <= xPos + Sizes.BUTTON_SIZE_X &&
-				yClick <= Sizes.GAME_HEIGHT - yPos && 
-				yClick >= Sizes.GAME_HEIGHT - (yPos + Sizes.BUTTON_SIZE_Y);
+		return xClick >= xFrom && 
+				xClick <= xTo &&
+				yClick <= Sizes.GAME_HEIGHT - yFrom && 
+				yClick >= Sizes.GAME_HEIGHT - yTo;
 	}
 
 	public void highlight(boolean highlight) {
@@ -70,4 +48,7 @@ public abstract class Button implements Drawable{
 	public boolean isHighlighted() {
 		return highlighted;
 	}
+	
+	@Override
+	public abstract void draw();
 }

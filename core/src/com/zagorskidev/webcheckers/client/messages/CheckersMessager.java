@@ -25,6 +25,7 @@ public class CheckersMessager implements Messager {
 	
 	@Override
 	public void startWriteReadThreads() {
+		
 		adapter = new WebSocketsListenerImpl(consumer, this);
 		
 		socket = WebSockets.newSocket("wss://webcheckersserver.herokuapp.com/checkers/websocket");
@@ -55,6 +56,7 @@ public class CheckersMessager implements Messager {
 	@Override
 	public void registerMessagesConsumer(MessagesConsumer consumer) {
 		this.consumer = consumer;
+		notifyConnection();
 	}
 	
 	@Override

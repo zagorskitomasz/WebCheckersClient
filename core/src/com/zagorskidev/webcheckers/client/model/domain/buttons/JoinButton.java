@@ -1,17 +1,18 @@
 package com.zagorskidev.webcheckers.client.model.domain.buttons;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
+import com.zagorskidev.webcheckers.client.graphics.Sprites;
 
 public class JoinButton extends Button {
 	
-	public JoinButton (Stage stage, ShapeRenderer renderer) {
+	public JoinButton () {
 		
-		super(stage, renderer);
-		
-		initialize(Sizes.GAME_WIDTH / 2 - 120, Sizes.GAME_HEIGHT - 480);
-		createLabel("Join game", Color.BLACK, 0, Sizes.GAME_HEIGHT - 435, 2);
+		super();
+		initialize(Sizes.GAME_HEIGHT - 490);
+	}
+	
+	@Override
+	public void draw() {
+		drawer.draw(Sprites.BTN_JOIN_PL, 0, yPos);
 	}
 }

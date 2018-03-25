@@ -1,30 +1,24 @@
 package com.zagorskidev.webcheckers.client.model.domain;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
-import com.zagorskidev.webcheckers.client.enums.field.Field;
 import com.zagorskidev.webcheckers.client.enums.field.Promotion;
 import com.zagorskidev.webcheckers.client.enums.field.Selection;
+import com.zagorskidev.webcheckers.client.graphics.Drawer;
+import com.zagorskidev.webcheckers.client.graphics.Sprites;
 import com.zagorskidev.webcheckers.client.util.Position;
 
 public class Board implements Drawable {
 	
-	private Stage stage;
-	private ShapeRenderer renderer;
+	private Drawer drawer;
 	
-	private Background background;
 	private BoardField[][] board;
 	
-	public Board(Stage stage, ShapeRenderer renderer, boolean inverted) {
+	public Board(boolean inverted) {
 		
-		this.stage = stage;
-		this.renderer = renderer;
+		drawer = Drawer.getInstance();
 		
-		background = new Background(stage, renderer);
 		board = new BoardField[Sizes.FIELD_NUMBER][Sizes.FIELD_NUMBER];
 		initialize(inverted);
 	}
@@ -41,13 +35,9 @@ public class Board implements Drawable {
 	private void initializeField(int i, int j, boolean inverted) {
 		
 		if(!inverted) 
-			board[i][j] = new BoardField(renderer, i, j, chooseFieldColor(i, j));
+			board[i][j] = new BoardField(i, j);
 		else 
-			board[i][j] = new BoardField(renderer, maxFieldIndex() - i, maxFieldIndex() - j, chooseFieldColor(i, j));
-	}
-
-	private Field chooseFieldColor(int i, int j) {
-		return (i + j) % 2 == 0 ? Field.DARK : Field.BRIGHT;
+			board[i][j] = new BoardField(maxFieldIndex() - i, maxFieldIndex() - j);
 	}
 	
 	private int maxFieldIndex() {
@@ -88,28 +78,18 @@ public class Board implements Drawable {
 		BoardField field = board[position.X][position.Y];
 		field.setSelection(Selection.RED);
 	}
-	
-	public void setLabel(String text, Color color) {
-		background.setLabel(text, color);
-	}
 
 	@Override
 	public void draw() {
 		
-		background.draw();
+		drawer.draw(Sprites.BACKGROUND, 0, 0);
+		drawer.draw(Sprites.FULL_BOARD, 0, Sizes.BOARD_MSG);
 		
 		for(int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++) {
 				board[i][j].draw();
 			}
 		}
-	}
-	
-	@Override
-	public void dispose() {
-		
-		stage.dispose();
-		renderer.dispose();
 	}
 
 	public void invert(boolean inverted) {

@@ -1,35 +1,33 @@
 package com.zagorskidev.webcheckers.client.model.domain;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
-import com.zagorskidev.webcheckers.client.enums.field.Field;
 import com.zagorskidev.webcheckers.client.enums.field.Promotion;
 import com.zagorskidev.webcheckers.client.enums.field.Selection;
+import com.zagorskidev.webcheckers.client.graphics.Drawer;
+import com.zagorskidev.webcheckers.client.graphics.MediaContainer;
+import com.zagorskidev.webcheckers.client.graphics.Sprites;
 
 public class BoardField implements Drawable{
 	
 	private int X;
 	private int Y;
 	
-	private ShapeRenderer renderer;
+	private Drawer drawer;
 	
-	private Field field;
 	private Checker checker;
 	private Selection selection;
 	private Promotion promotion;
 	
-	public BoardField(ShapeRenderer renderer, int x, int y, Field field) {
+	public BoardField(int x, int y) {
 		
 		X = x * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET;
 		Y = Sizes.GAME_HEIGHT - ((y + 1) * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET);
 		
-		this.renderer = renderer;
+		drawer = Drawer.getInstance();
 		
-		this.field = field;
 		checker = Checker.NONE;
 		selection = Selection.NONE;
 		promotion = Promotion.NO;
@@ -64,21 +62,22 @@ public class BoardField implements Drawable{
 	}
 	
 	public void draw() {
-		
-		drawField();
-		drawChecker();
+
 		drawSelection();
+		drawChecker();
 		drawPromotion();
 	}
 	
-	private void drawField() {
+	private void drawSelection() {
 		
-		switch(field) {
-		case BRIGHT:
-			drawField(Color.TAN);
+		switch(selection) {
+		case GREEN:
+			drawSelection(Sprites.SELECTION_GRN);
 			break;
-		case DARK:
-			drawField(Color.BROWN);
+		case RED:
+			drawSelection(Sprites.SELECTION_RED);
+			break;
+		case NONE:
 			break;
 		default:
 			break;
@@ -89,26 +88,10 @@ public class BoardField implements Drawable{
 		
 		switch(checker) {
 		case BLACK:
-			drawChecker(Color.BLACK);
+			drawChecker(Sprites.CHECKER_BLACK);
 			break;
 		case WHITE:
-			drawChecker(Color.WHITE);
-			break;
-		case NONE:
-			break;
-		default:
-			break;
-		}
-	}
-	
-	private void drawSelection() {
-		
-		switch(selection) {
-		case GREEN:
-			drawSelection(Color.GREEN);
-			break;
-		case RED:
-			drawSelection(Color.RED);
+			drawChecker(Sprites.CHECKER_WHITE);
 			break;
 		case NONE:
 			break;
@@ -121,7 +104,7 @@ public class BoardField implements Drawable{
 		
 		switch(promotion) {
 		case YES:
-			drawPromotion(Color.GOLD);
+			drawPromotion(Sprites.PROMOTION);
 			break;
 		case NO:
 			break;
@@ -130,41 +113,19 @@ public class BoardField implements Drawable{
 		}
 	}
 	
-	private void drawField(Color color) {
-		
-		renderer.setColor(color);
-		renderer.begin(ShapeType.Filled);
-		renderer.rect(X + 2, Y + 2, Sizes.FIELD_SIZE - 4, Sizes.FIELD_SIZE - 4);
-		renderer.end();
-	}
-	
-	private void drawChecker(Color color) {
-		
-		renderer.setColor(color);
-		renderer.begin(ShapeType.Filled);
-		renderer.ellipse(X + 6, Y + 6, Sizes.FIELD_SIZE - 12, Sizes.FIELD_SIZE - 12);
-		renderer.end();
-	}
-	
-	private void drawSelection(Color color) {
+	private void drawSelection(MediaContainer<Sprite> sprite) {
 
-		renderer.setColor(color);
-		renderer.begin(ShapeType.Line);
-		renderer.ellipse(X + 5, Y + 5, Sizes.FIELD_SIZE - 10, Sizes.FIELD_SIZE - 10);
-		renderer.end();
+		drawer.draw(sprite, X - 10, Y - 10);
 	}
 	
-	private void drawPromotion(Color color) {
+	private void drawChecker(MediaContainer<Sprite> sprite) {
 
-		renderer.setColor(color);
-		renderer.begin(ShapeType.Filled);
-		renderer.triangle(X + 12, Y + 18, 
-				X + Sizes.FIELD_SIZE / 2, Y + Sizes.FIELD_SIZE - 9, 
-				X + Sizes.FIELD_SIZE - 12, Y + 18);
-		renderer.triangle(X + 12, Y + Sizes.FIELD_SIZE - 18, 
-				X + Sizes.FIELD_SIZE / 2, Y + 9, 
-				X + Sizes.FIELD_SIZE - 12, Y  + Sizes.FIELD_SIZE - 18);
-		renderer.end();
+		drawer.draw(sprite, X, Y);
+	}
+	
+	private void drawPromotion(MediaContainer<Sprite> sprite) {
+
+		drawer.draw(sprite, X, Y);
 	}
 	
 	public boolean isSelected() {

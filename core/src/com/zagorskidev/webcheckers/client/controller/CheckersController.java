@@ -3,6 +3,8 @@ package com.zagorskidev.webcheckers.client.controller;
 import com.badlogic.gdx.Gdx;
 import com.zagorskidev.webcheckers.client.enums.ButtonType;
 import com.zagorskidev.webcheckers.client.enums.Color;
+import com.zagorskidev.webcheckers.client.enums.GameMsg;
+import com.zagorskidev.webcheckers.client.enums.LobbyMsg;
 import com.zagorskidev.webcheckers.client.enums.MsgCode;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
 import com.zagorskidev.webcheckers.client.messages.Message;
@@ -188,9 +190,6 @@ public class CheckersController implements Controller{
 		case GAME_FULL:
 			gameFull();
 			break;
-		case ERROR:
-			errorOccured();
-			break;
 		case YOUR_MOVE:
 			setActive(true);
 			break;
@@ -259,27 +258,23 @@ public class CheckersController implements Controller{
 	}
 	
 	private void notExist() {
-		model.setLobbyLabel("Game doesn't exist.", com.badlogic.gdx.graphics.Color.RED);
+		model.setLobbyMsg(LobbyMsg.GAME_NOT_EXIST);
 	}
 	
 	private void gameExists() {
-		model.setLobbyLabel("Game exists.", com.badlogic.gdx.graphics.Color.RED);
+		model.setLobbyMsg(LobbyMsg.GAME_EXISTS);
 	}
 	
 	private void gameFull() {
-		model.setLobbyLabel("Game full.", com.badlogic.gdx.graphics.Color.RED);
-	}
-	
-	private void errorOccured() {
-		model.setLobbyLabel("Error occured...", com.badlogic.gdx.graphics.Color.RED);
+		model.setLobbyMsg(LobbyMsg.GAME_FULL);
 	}
 	
 	private void setActive(boolean active) {
 		this.active = active;
 		if(active)
-			model.setLabel("Your move!", com.badlogic.gdx.graphics.Color.BLACK);
+			model.setLabel(GameMsg.YOUR_MOVE);
 		else
-			model.setLabel("", com.badlogic.gdx.graphics.Color.BLACK);
+			model.setLabel(null);
 	}
 	
 	private void clearFields(String[] fields) {
@@ -295,7 +290,7 @@ public class CheckersController implements Controller{
 			SimpleChecker checker = SimpleChecker.parse(field);
 			model.addChecker(checker.position, checker.type, checker.promotion);
 		}
-		model.setLabel("", com.badlogic.gdx.graphics.Color.BLACK);
+		model.setLabel(null);
 	}
 	
 	private void selectChecker(String field) {
@@ -309,27 +304,27 @@ public class CheckersController implements Controller{
 	}
 	
 	private void won() {
-		model.gameOver("Congratulations! You won.", com.badlogic.gdx.graphics.Color.GREEN);
+		model.gameOver(GameMsg.WON);
 	}
 	
 	private void lost() {
-		model.gameOver("You lost...", com.badlogic.gdx.graphics.Color.RED);
+		model.gameOver(GameMsg.LOST);
 	}
 	
 	private void draw() {
-		model.gameOver("Draw!", com.badlogic.gdx.graphics.Color.ORANGE);
+		model.gameOver(GameMsg.DRAW);
 	}
 	
 	private void connectionTimedOut() {
-		model.gameOver("Connection timed out...", com.badlogic.gdx.graphics.Color.RED);
+		model.serverDisconnected();
 	}
 	
 	private void disconnected() {
-		model.disconnected();
+		model.serverDisconnected();
 	}
 	
 	private void playerDisconnected(String color) {
-		model.playerDisconnected(color);
+		model.playerDisconnected();
 	}
 	
 	private void connected() {

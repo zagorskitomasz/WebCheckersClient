@@ -1,12 +1,10 @@
 package com.zagorskidev.webcheckers.client.model;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.zagorskidev.webcheckers.client.draw.Drawable;
 import com.zagorskidev.webcheckers.client.enums.ButtonType;
 import com.zagorskidev.webcheckers.client.enums.Color;
+import com.zagorskidev.webcheckers.client.enums.GameMsg;
+import com.zagorskidev.webcheckers.client.enums.LobbyMsg;
 import com.zagorskidev.webcheckers.client.enums.ModelType;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
 import com.zagorskidev.webcheckers.client.enums.field.Promotion;
@@ -30,8 +28,6 @@ public class CheckersModel implements Model {
 	}
 	
 	private Drawable view;
-	private Stage stage;
-	private ShapeRenderer renderer;
 	
 	private LobbyModel lobbyModel;
 	private GameModel gameModel;
@@ -45,11 +41,6 @@ public class CheckersModel implements Model {
 	private boolean waitingForPlayer;
 	
 	private CheckersModel() {
-		
-		Gdx.gl.glLineWidth(4);
-		renderer = new ShapeRenderer();
-		stage = new Stage(new ScreenViewport());
-		
 		createLobby();
 	}
 	
@@ -57,7 +48,7 @@ public class CheckersModel implements Model {
 	public void createGame() {
 		
 		waitingForPlayer = false;
-		waitingModel = new WaitingModelImpl(stage);
+		waitingModel = new WaitingModelImpl();
 		setModel(ModelType.WAITING);
 	}
 	
@@ -65,14 +56,14 @@ public class CheckersModel implements Model {
 	public void startGame(Color color) {
 		
 		inverted = color == Color.BLACK ? false : true;
-		gameModel = new GameModelImpl(stage, renderer, inverted);
+		gameModel = new GameModelImpl(inverted);
 		setModel(ModelType.GAME);
 	}
 	
 	@Override
 	public void createLobby() {
 		
-		lobbyModel = new LobbyModelImpl(stage, renderer);
+		lobbyModel = new LobbyModelImpl();
 		setModel(ModelType.LOBBY);
 	}
 	
@@ -142,19 +133,19 @@ public class CheckersModel implements Model {
 	}
 	
 	@Override
-	public void setLabel(String text, com.badlogic.gdx.graphics.Color color) {
-		 gameModel.setLabel(text, color);
+	public void setLabel(GameMsg msg) {
+		 gameModel.setLabel(msg);
 	}
 	
 	@Override
-	public void setLobbyLabel(String text, com.badlogic.gdx.graphics.Color color) {
-		 lobbyModel.setLobbyLabel(text, color);
+	public void setLobbyMsg(LobbyMsg msg) {
+		 lobbyModel.setLobbyMsg(msg);
 	}
 	
 	@Override
-	public void gameOver(String message, com.badlogic.gdx.graphics.Color color) {
+	public void gameOver(GameMsg msg) {
 		gameOver = true;
-		setLabel(message, color);
+		setLabel(msg);
 	}
 	
 	@Override
@@ -184,33 +175,45 @@ public class CheckersModel implements Model {
 	}
 	
 	@Override
-	public void disconnected() {
+	public void playerDisconnected() {
 		
 		if(isDuringGame()) {
-			gameOver("Disconnected...", com.badlogic.gdx.graphics.Color.RED);
+			gameOver(GameMsg.OPP_DISCONNECTED);
 			return;
 		}
 		else if(!isInLobby())
 			createLobby();
 		
-		setLobbyLabel("Disconnected...", com.badlogic.gdx.graphics.Color.RED);	
+		lobbyModel.connected();
+		lobbyModel.setLobbyMsg(null);
+	}
+	
+	@Override
+	public void serverDisconnected() {
+		
+		if(isDuringGame()) {
+			gameOver(GameMsg.SERVER_DISCONNECTED);
+			return;
+		}
+		else if(!isInLobby())
+			createLobby();
+		
+		lobbyModel.disconnected();
+		lobbyModel.setLobbyMsg(null);
 	}
 	
 	@Override
 	public void connected() {
 		
 		if(isInLobby())		
-			setLobbyLabel("Connected!", com.badlogic.gdx.graphics.Color.GREEN);	
+			lobbyModel.connected();
 	}
 	
 	@Override
-	public void playerDisconnected(String color) {
+	public void disconnected() {
 		
-		if(!isDuringGame())
-			return;
-		
-		setLabel("2nd player disconnected...", com.badlogic.gdx.graphics.Color.RED);
-		waitingForPlayer = true;
+		if(isInLobby())		
+			lobbyModel.disconnected();
 	}
 	
 	public boolean isWaiting() {
@@ -234,13 +237,9 @@ public class CheckersModel implements Model {
 	
 	@Override
 	public void draw() {
-		if(view != null)
+		
+		if(view != null) {
 			view.draw();
-	}
-	
-	@Override
-	public void dispose() {
-		if(view != null)
-			view.dispose();
+		}
 	}
 }

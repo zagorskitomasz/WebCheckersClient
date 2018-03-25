@@ -1,17 +1,18 @@
 package com.zagorskidev.webcheckers.client.model.domain.buttons;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
+import com.zagorskidev.webcheckers.client.graphics.Sprites;
 
 public class CreateButton extends Button {
 	
-	public CreateButton (Stage stage, ShapeRenderer renderer) {
+	public CreateButton () {
 		
-		super(stage, renderer);
-		
-		initialize(Sizes.GAME_WIDTH / 2 - 120, Sizes.GAME_HEIGHT - 300);
-		createLabel("Create game", Color.BLACK, 0, Sizes.GAME_HEIGHT - 255, 2);
+		super();
+		initialize(Sizes.GAME_HEIGHT - 360);
+	}
+	
+	@Override
+	public void draw() {
+		drawer.draw(Sprites.BTN_CREATE_PL, 0, yPos);
 	}
 }

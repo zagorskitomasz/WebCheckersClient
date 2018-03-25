@@ -1,52 +1,43 @@
 package com.zagorskidev.webcheckers.client.model.domain.buttons;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.zagorskidev.webcheckers.client.enums.Sizes;
+import com.zagorskidev.webcheckers.client.graphics.Sprites;
 
 public class InvertButton extends Button {
 	
-	
-	
-	public InvertButton (Stage stage, ShapeRenderer renderer) {
+	public InvertButton () {
 		
-		super(stage, renderer);
+		super();
+		initialize(0);
+	}
+	
+	@Override
+	protected void initialize(int yPos) {
 		
-		initialize(15, 15);
-		createLabel("", Color.BLACK, 0, Sizes.GAME_HEIGHT - 255, 2);
+		super.initialize(yPos);
+		
+		xFrom = (Sizes.SM_BUTTON_PANEL_SIZE - Sizes.SM_BUTTON_SIZE) / 2;
+		xTo = xFrom + Sizes.SM_BUTTON_SIZE;
+		yFrom = yPos + (Sizes.SM_BUTTON_PANEL_SIZE - Sizes.SM_BUTTON_SIZE) /2;
+		yTo = yFrom + Sizes.SM_BUTTON_SIZE;
 	}
 	
 	@Override
 	public void draw() {
 		
-		drawButton();
 		if(isHighlighted())
 			drawHighlight();
+		else
+			drawButton();
 	}
 
 	private void drawButton() {
 		
-		renderer.setColor(Color.BLUE);
-		renderer.begin(ShapeType.Filled);
-		renderer.rect(xPos, yPos, Sizes.SM_BUTTON_SIZE_X, Sizes.SM_BUTTON_SIZE_Y);
-		renderer.end();
+		drawer.draw(Sprites.BTN_INVERT_OFF, 0, yPos);
 	}
 
 	private void drawHighlight() {
 		
-		renderer.setColor(Color.YELLOW);
-		renderer.begin(ShapeType.Filled);
-		renderer.rect(xPos + 15, yPos + 15, Sizes.SM_BUTTON_SIZE_X - 30, Sizes.SM_BUTTON_SIZE_Y - 30);
-		renderer.end();
-	}
-	
-	public boolean wasClicked(int xClick, int yClick) {
-		
-		return xClick >= xPos && 
-				xClick <= xPos + Sizes.SM_BUTTON_SIZE_X &&
-				yClick <= Sizes.GAME_HEIGHT - yPos && 
-				yClick >= Sizes.GAME_HEIGHT - (yPos + Sizes.SM_BUTTON_SIZE_Y);
+		drawer.draw(Sprites.BTN_INVERT_ON, 0, yPos);
 	}
 }

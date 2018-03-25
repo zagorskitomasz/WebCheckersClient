@@ -8,8 +8,9 @@ public class Sizes {
 	public static final int FIELD_NUMBER = 10;
 	public static final int GAME_WIDTH = FIELD_NUMBER * FIELD_SIZE + 2 * BOARD_OFFSET;
 	public static final int GAME_HEIGHT = GAME_WIDTH + BOARD_MSG;
-	public static final int BUTTON_SIZE_X = 240;
-	public static final int BUTTON_SIZE_Y = 100;
-	public static final int SM_BUTTON_SIZE_X = 70;
-	public static final int SM_BUTTON_SIZE_Y = 70;
+	public static final int BUTTON_SIZE_X = 340;
+	public static final int BUTTON_SIZE_Y = 80;
+	public static final int BUTTON_PANEL_SIZE_Y = 120;
+	public static final int SM_BUTTON_SIZE = 60;
+	public static final int SM_BUTTON_PANEL_SIZE = 100;
 }
