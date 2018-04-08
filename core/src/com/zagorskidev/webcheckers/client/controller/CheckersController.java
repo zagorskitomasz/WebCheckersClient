@@ -165,7 +165,11 @@ public class CheckersController implements Controller{
 	public void executeMessageAction(Message message) {
 		
 		try {
-			Gdx.app.postRunnable(() -> execute(message));
+			Gdx.app.postRunnable(new Runnable() {
+				public void run() {
+					execute(message);
+				}
+			});
 		}
 		catch(Exception exception) {
 			exception.printStackTrace();

@@ -34,36 +34,37 @@ public enum Sprites implements MediaContainer<Sprite>{
 	WAITING("waiting.png",1),
 	WON("won.png",1),
 	YOUR_MOVE("your_move.png",1);
-	
+
 	private List<Sprite> sprites;
 	private Iterator<Sprite> iterator;
-	
+
 	private Sprites(String filename, int amount) {
-		
+
 		sprites = new LinkedList<>();
-		
+
 		for(int i = 0; i < amount; i++)
 			sprites.add(new Sprite(new Texture(filename)));
-		
+
 		resetStack();
 	}
-	
+
 	@Override
 	public Sprite getMedia() {
-		
+
 		return iterator.next();
 	}
 
 	@Override
 	public void resetStack() {
-		
-		sprites.forEach(sprite -> sprite.setPosition(Sizes.GAME_WIDTH + 1, Sizes.GAME_HEIGHT + 1));
+
+		for(Sprite sprite : sprites)
+			sprite.setPosition(Sizes.GAME_WIDTH + 1, Sizes.GAME_HEIGHT + 1);
 		iterator = sprites.iterator();
 	}
 
 	@Override
 	public MediaContainer<Sprite>[] getAllMedia() {
-		
+
 		return Sprites.values();
 	}
 }

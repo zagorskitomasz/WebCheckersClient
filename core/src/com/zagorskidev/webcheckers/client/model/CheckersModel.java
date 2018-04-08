@@ -55,7 +55,7 @@ public class CheckersModel implements Model {
 	@Override
 	public void startGame(Color color) {
 		
-		inverted = color == Color.BLACK ? false : true;
+		inverted = color != Color.BLACK;
 		gameModel = new GameModelImpl(inverted);
 		setModel(ModelType.GAME);
 	}
@@ -242,4 +242,7 @@ public class CheckersModel implements Model {
 			view.draw();
 		}
 	}
+
+	@Override
+	public void invert(boolean inverted){ }
 }

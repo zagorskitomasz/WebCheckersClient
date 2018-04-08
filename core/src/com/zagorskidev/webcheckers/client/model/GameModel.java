@@ -21,6 +21,6 @@ public interface GameModel extends Drawable{
 	public void selectCheckerToKill(Position position);
 	public void setLabel(GameMsg msg);
 	public ButtonType recognizeClickedButton(int xClick, int yClick);
-	public default void invert(boolean inverted) {}
+	public void invert(boolean inverted);
 	public void invertRequest();
 }

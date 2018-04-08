@@ -44,7 +44,11 @@ public class WebCheckers extends ApplicationAdapter {
 		messagesDispatcher.registerMessagesConsumer(gameManager);
 		gameManager.registerMessagesSender(messagesDispatcher);
 		
-		Gdx.app.postRunnable(() -> messagesDispatcher.startWriteReadThreads());
+		Gdx.app.postRunnable(new Runnable() {
+			public void run() {
+				messagesDispatcher.startWriteReadThreads();
+			}
+		});
 	}
 
 	@Override
