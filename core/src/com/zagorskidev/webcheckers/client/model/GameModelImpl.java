@@ -2,6 +2,7 @@ package com.zagorskidev.webcheckers.client.model;
 
 import com.zagorskidev.webcheckers.client.enums.ButtonType;
 import com.zagorskidev.webcheckers.client.enums.GameMsg;
+import com.zagorskidev.webcheckers.client.enums.Sizes;
 import com.zagorskidev.webcheckers.client.enums.field.Checker;
 import com.zagorskidev.webcheckers.client.enums.field.Promotion;
 import com.zagorskidev.webcheckers.client.graphics.Drawer;
@@ -73,7 +74,7 @@ public class GameModelImpl implements GameModel {
 		invertButton.draw();
 		
 		if(label != null)
-			drawer.draw(label.getSprite(), 100, 0);
+			drawer.draw(label.getSprite(), (int)(100 * Sizes.RESIZE_FACTOR), (int)(20 * Sizes.RESIZE_FACTOR));
 	}
 
 	@Override

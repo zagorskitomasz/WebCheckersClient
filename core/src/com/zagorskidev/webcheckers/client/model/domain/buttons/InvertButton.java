@@ -8,7 +8,7 @@ public class InvertButton extends Button {
 	public InvertButton () {
 		
 		super();
-		initialize(0);
+		initialize((int)(20 * Sizes.RESIZE_FACTOR));
 	}
 	
 	@Override
@@ -16,7 +16,7 @@ public class InvertButton extends Button {
 		
 		super.initialize(yPos);
 		
-		xFrom = (Sizes.SM_BUTTON_PANEL_SIZE - Sizes.SM_BUTTON_SIZE) / 2;
+		xFrom = (int)(20 * Sizes.RESIZE_FACTOR) + (Sizes.SM_BUTTON_PANEL_SIZE - Sizes.SM_BUTTON_SIZE) / 2;
 		xTo = xFrom + Sizes.SM_BUTTON_SIZE;
 		yFrom = yPos + (Sizes.SM_BUTTON_PANEL_SIZE - Sizes.SM_BUTTON_SIZE) /2;
 		yTo = yFrom + Sizes.SM_BUTTON_SIZE;
@@ -33,11 +33,11 @@ public class InvertButton extends Button {
 
 	private void drawButton() {
 		
-		drawer.draw(Sprites.BTN_INVERT_OFF, 0, yPos);
+		drawer.draw(Sprites.BTN_INVERT_OFF, (int)(20 * Sizes.RESIZE_FACTOR), yPos);
 	}
 
 	private void drawHighlight() {
 		
-		drawer.draw(Sprites.BTN_INVERT_ON, 0, yPos);
+		drawer.draw(Sprites.BTN_INVERT_ON, (int)(20 * Sizes.RESIZE_FACTOR), yPos);
 	}
 }

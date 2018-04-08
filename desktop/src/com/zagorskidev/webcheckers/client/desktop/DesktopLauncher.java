@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.github.czyzby.websocket.CommonWebSockets;
 import com.zagorskidev.webcheckers.client.WebCheckers;
-import com.zagorskidev.webcheckers.client.enums.Sizes;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -19,8 +18,8 @@ public class DesktopLauncher {
 		
 		config.title = "Web Checkers";
 		config.useGL30 = true;
-		config.height = Sizes.GAME_HEIGHT;
-		config.width = Sizes.GAME_WIDTH;
+		config.height = 700;
+		config.width = 400;
 		
 		return new LwjglApplication(new WebCheckers(), config);
 	}

@@ -24,7 +24,7 @@ public class BoardField implements Drawable{
 	public BoardField(int x, int y) {
 		
 		X = x * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET;
-		Y = Sizes.GAME_HEIGHT - ((y + 1) * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET);
+		Y = (int)(Sizes.GAME_HEIGHT * 1.5 / 7 * Sizes.RESIZE_FACTOR) + Sizes.BOARD_HEIGHT - ((y + 1) * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET);
 		
 		drawer = Drawer.getInstance();
 		
@@ -115,7 +115,7 @@ public class BoardField implements Drawable{
 	
 	private void drawSelection(MediaContainer<Sprite> sprite) {
 
-		drawer.draw(sprite, X - 10, Y - 10);
+		drawer.draw(sprite, X - (int)(10 * Sizes.RESIZE_FACTOR), Y - (int)(10 * Sizes.RESIZE_FACTOR));
 	}
 	
 	private void drawChecker(MediaContainer<Sprite> sprite) {

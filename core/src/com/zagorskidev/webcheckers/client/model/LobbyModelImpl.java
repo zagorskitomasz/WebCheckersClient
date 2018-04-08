@@ -8,6 +8,7 @@ import com.zagorskidev.webcheckers.client.graphics.Drawer;
 import com.zagorskidev.webcheckers.client.graphics.Sprites;
 import com.zagorskidev.webcheckers.client.model.domain.buttons.Button;
 import com.zagorskidev.webcheckers.client.model.domain.buttons.CreateButton;
+import com.zagorskidev.webcheckers.client.model.domain.buttons.ExitButton;
 import com.zagorskidev.webcheckers.client.model.domain.buttons.JoinButton;
 
 /**
@@ -19,6 +20,7 @@ public class LobbyModelImpl implements LobbyModel {
 	
 	private Button createButton;
 	private Button joinButton;
+	private Button exitButton;
 	
 	private LobbyMsg lobbyMsg;
 	private ConnectionMsg connectionMsg;
@@ -35,20 +37,22 @@ public class LobbyModelImpl implements LobbyModel {
 		
 		createButton = new CreateButton();
 		joinButton = new JoinButton();
+		exitButton = new ExitButton();
 	}
 	
 	@Override
 	public void draw() {
 		
 		drawer.draw(Sprites.BACKGROUND, 0, 0);
-		drawer.draw(Sprites.TITLE_PL, 0, Sizes.GAME_HEIGHT - 320);
+		drawer.draw(Sprites.TITLE_PL, 0, (int)(Sizes.GAME_HEIGHT - Sizes.GAME_HEIGHT * 3 / 7 * Sizes.RESIZE_FACTOR));
 		createButton.draw();
 		joinButton.draw();
+		exitButton.draw();
 		
 		if(lobbyMsg != null)
-			drawer.draw(lobbyMsg.getSprite(), 0, 80);
+			drawer.draw(lobbyMsg.getSprite(), 0, (int)(Sizes.GAME_HEIGHT * 3 / 7 * Sizes.RESIZE_FACTOR));
 		if(connectionMsg != null)
-			drawer.draw(connectionMsg.getSprite(), 0, 10);
+			drawer.draw(connectionMsg.getSprite(), 0, (int)(Sizes.GAME_HEIGHT * 0.3 / 7 * Sizes.RESIZE_FACTOR));
 	}
 
 	@Override

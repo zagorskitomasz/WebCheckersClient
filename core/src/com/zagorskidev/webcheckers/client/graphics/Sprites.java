@@ -12,6 +12,7 @@ public enum Sprites implements MediaContainer<Sprite>{
 
 	BACKGROUND("background.png",1),
 	BTN_CREATE_PL("btn_create_pl.png",1),
+	BTN_EXIT_PL("btn_exit_pl.png",1),
 	BTN_INVERT_OFF("btn_invert_off.png",1),
 	BTN_INVERT_ON("btn_invert_on.png",1),
 	BTN_JOIN_PL("btn_join_pl.png",1),
@@ -42,8 +43,12 @@ public enum Sprites implements MediaContainer<Sprite>{
 
 		sprites = new LinkedList<>();
 
-		for(int i = 0; i < amount; i++)
-			sprites.add(new Sprite(new Texture(filename)));
+		for(int i = 0; i < amount; i++) {
+			
+			Sprite sprite = new Sprite(new Texture(filename));
+			sprite.setSize(sprite.getWidth() * Sizes.RESIZE_FACTOR, sprite.getHeight() * Sizes.RESIZE_FACTOR);
+			sprites.add(sprite);
+		}
 
 		resetStack();
 	}

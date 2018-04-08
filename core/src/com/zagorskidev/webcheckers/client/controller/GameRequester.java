@@ -47,7 +47,8 @@ public class GameRequester implements TextInputListener, MessagesProducer {
 	}
 	
 	private void addPassword() {
-		Gdx.input.getTextInput(this, "Podaj hasło:", "", "Podaj hasło");
+		//Gdx.input.getTextInput(this, "Podaj hasło:", "", "Podaj hasło");
+		input("password");
 	}
 	
 	private boolean validate(String text) {
