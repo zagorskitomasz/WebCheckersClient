@@ -15,7 +15,7 @@ public class WaitingModelImpl implements WaitingModel{
 	@Override
 	public void draw() {
 		drawer.draw(Sprites.BACKGROUND, 0, 0);
-		drawer.draw(Sprites.TITLE_PL, 0, (int)(Sizes.GAME_HEIGHT - Sizes.GAME_HEIGHT * 3 / 7 * Sizes.RESIZE_FACTOR));
-		drawer.draw(Sprites.WAITING, 0, (int)(Sizes.GAME_HEIGHT * 3 / 7 * Sizes.RESIZE_FACTOR));
+		drawer.draw(Sprites.TITLE_PL, 0, (int)(Sizes.GAME_HEIGHT - Sizes.TITLE_HEIGHT));
+		drawer.draw(Sprites.WAITING, 0, (int)(Sizes.GAME_HEIGHT * 3 / 7));
 	}
 }

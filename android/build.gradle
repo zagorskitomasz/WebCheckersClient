@@ -22,7 +22,7 @@ android {
     }
     defaultConfig {
         applicationId "com.zagorskidev.webcheckers.client"
-        minSdkVersion 22
+        minSdkVersion 9
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -102,8 +102,8 @@ eclipse {
     }
 
     jdt {
-        sourceCompatibility = 1.6
-        targetCompatibility = 1.6
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 
     classpath {

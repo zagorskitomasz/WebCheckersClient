@@ -4,5 +4,6 @@ public enum ButtonType {
 
 	JOIN,
 	CREATE,
+	EXIT,
 	INVERT;
 }

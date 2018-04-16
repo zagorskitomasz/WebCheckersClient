@@ -8,7 +8,7 @@ public class JoinButton extends Button {
 	public JoinButton () {
 		
 		super();
-		initialize(Sizes.GAME_HEIGHT - (int)(Sizes.GAME_HEIGHT * 5.3 / 7 * Sizes.RESIZE_FACTOR));
+		initialize((int)(Sizes.GAME_HEIGHT * 2.7 / 7));
 	}
 	
 	@Override

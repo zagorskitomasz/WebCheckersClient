@@ -8,7 +8,7 @@ public class CreateButton extends Button {
 	public CreateButton () {
 		
 		super();
-		initialize(Sizes.GAME_HEIGHT - (int)(Sizes.GAME_HEIGHT * 4 / 7 * Sizes.RESIZE_FACTOR));
+		initialize((int)(Sizes.GAME_HEIGHT * 3.7 / 7));
 	}
 	
 	@Override

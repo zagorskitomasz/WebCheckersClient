@@ -83,8 +83,8 @@ public class Board implements Drawable {
 	public void draw() {
 		
 		drawer.draw(Sprites.BACKGROUND, 0, 0);
-		drawer.draw(Sprites.TITLE_PL, 0, (int)(Sizes.GAME_HEIGHT - Sizes.GAME_HEIGHT * 3 / 7 * Sizes.RESIZE_FACTOR));
-		drawer.draw(Sprites.FULL_BOARD, 0, (int)(Sizes.GAME_HEIGHT * 1.5 / 7 * Sizes.RESIZE_FACTOR));
+		drawer.draw(Sprites.TITLE_PL, 0, (int)(Sizes.GAME_HEIGHT - Sizes.TITLE_HEIGHT));
+		drawer.draw(Sprites.FULL_BOARD, 0, (int)(Sizes.GAME_HEIGHT * 1 / 7));
 		
 		for(int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++) {

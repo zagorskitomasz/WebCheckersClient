@@ -8,7 +8,7 @@ public class ExitButton extends Button {
 	public ExitButton () {
 		
 		super();
-		initialize((int)(Sizes.GAME_HEIGHT * 1.3 / 7 * Sizes.RESIZE_FACTOR));
+		initialize((int)(Sizes.GAME_HEIGHT * 1.1 / 7));
 	}
 	
 	@Override

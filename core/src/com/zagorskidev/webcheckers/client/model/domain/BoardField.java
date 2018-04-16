@@ -23,8 +23,8 @@ public class BoardField implements Drawable{
 	
 	public BoardField(int x, int y) {
 		
-		X = x * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET;
-		Y = (int)(Sizes.GAME_HEIGHT * 1.5 / 7 * Sizes.RESIZE_FACTOR) + Sizes.BOARD_HEIGHT - ((y + 1) * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET);
+		X = (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * x / Sizes.FIELD_NUMBER + Sizes.BOARD_OFFSET;
+		Y = (int)(Sizes.GAME_HEIGHT * 1 / 7) + Sizes.BOARD_HEIGHT - (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * (y + 1) / Sizes.FIELD_NUMBER - Sizes.BOARD_OFFSET;
 		
 		drawer = Drawer.getInstance();
 		
@@ -34,8 +34,8 @@ public class BoardField implements Drawable{
 	}
 
 	public void setPosition(int x, int y) {
-		X = x * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET;
-		Y = Sizes.GAME_HEIGHT - ((y + 1) * Sizes.FIELD_SIZE + Sizes.BOARD_OFFSET);
+		X = (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * x / Sizes.FIELD_NUMBER + Sizes.BOARD_OFFSET;
+		Y = (int)(Sizes.GAME_HEIGHT * 1 / 7) + Sizes.BOARD_HEIGHT - (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * (y + 1) / Sizes.FIELD_NUMBER - Sizes.BOARD_OFFSET;
 	}
 	
 	public void setChecker(Checker checker) {

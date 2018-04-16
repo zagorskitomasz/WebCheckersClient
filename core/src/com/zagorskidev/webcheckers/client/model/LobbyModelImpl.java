@@ -44,15 +44,15 @@ public class LobbyModelImpl implements LobbyModel {
 	public void draw() {
 		
 		drawer.draw(Sprites.BACKGROUND, 0, 0);
-		drawer.draw(Sprites.TITLE_PL, 0, (int)(Sizes.GAME_HEIGHT - Sizes.GAME_HEIGHT * 3 / 7 * Sizes.RESIZE_FACTOR));
+		drawer.draw(Sprites.TITLE_PL, 0, (int)(Sizes.GAME_HEIGHT - Sizes.TITLE_HEIGHT));
 		createButton.draw();
 		joinButton.draw();
 		exitButton.draw();
 		
 		if(lobbyMsg != null)
-			drawer.draw(lobbyMsg.getSprite(), 0, (int)(Sizes.GAME_HEIGHT * 3 / 7 * Sizes.RESIZE_FACTOR));
+			drawer.draw(lobbyMsg.getSprite(), 0, (int)(Sizes.GAME_HEIGHT * 2.2 / 7));
 		if(connectionMsg != null)
-			drawer.draw(connectionMsg.getSprite(), 0, (int)(Sizes.GAME_HEIGHT * 0.3 / 7 * Sizes.RESIZE_FACTOR));
+			drawer.draw(connectionMsg.getSprite(), 0, (int)(Sizes.GAME_HEIGHT * 0.3 / 7));
 	}
 
 	@Override
@@ -63,6 +63,9 @@ public class LobbyModelImpl implements LobbyModel {
 		
 		if(joinButton.wasClicked(xClick, yClick))
 			return ButtonType.JOIN;
+
+		if(exitButton.wasClicked(xClick, yClick))
+			return ButtonType.EXIT;
 		
 		return null;
 	}

@@ -72,4 +72,8 @@ public class WebCheckers extends ApplicationAdapter {
 	public void dispose () {
 		Drawer.getInstance().dispose();
 	}
+	
+	public static void exit() {
+		Gdx.app.exit();
+	}
 }

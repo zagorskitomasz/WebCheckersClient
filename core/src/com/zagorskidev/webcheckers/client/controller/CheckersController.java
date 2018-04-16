@@ -1,6 +1,7 @@
 package com.zagorskidev.webcheckers.client.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.zagorskidev.webcheckers.client.WebCheckers;
 import com.zagorskidev.webcheckers.client.enums.ButtonType;
 import com.zagorskidev.webcheckers.client.enums.Color;
 import com.zagorskidev.webcheckers.client.enums.GameMsg;
@@ -84,8 +85,8 @@ public class CheckersController implements Controller{
 	
 	private Position calculatePosition(int xClick, int yClick) {
 		
-		int x = (xClick - Sizes.BOARD_OFFSET) / Sizes.FIELD_SIZE;
-		int y = (yClick - Sizes.BOARD_OFFSET) / Sizes.FIELD_SIZE;
+		int x = (xClick - Sizes.BOARD_OFFSET) * Sizes.FIELD_NUMBER / (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET);
+		int y = (yClick - (int)(Sizes.GAME_HEIGHT - Sizes.BOARD_HEIGHT - (Sizes.GAME_HEIGHT * 1 / 7)) - Sizes.BOARD_OFFSET) / Sizes.FIELD_SIZE;
 		
 		if(xClick < Sizes.BOARD_OFFSET)
 			x = -1;
@@ -151,6 +152,10 @@ public class CheckersController implements Controller{
 		case JOIN:
 			if(model.isInLobby())
 				requester.executeMessage(MsgCode.JOIN_GAME);
+			return null;
+		case EXIT:
+			if(model.isInLobby())
+				WebCheckers.exit();
 			return null;
 		case INVERT:
 			if(model.isDuringGame())
