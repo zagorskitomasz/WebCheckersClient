@@ -23,7 +23,7 @@ public class BoardField implements Drawable{
 	
 	public BoardField(int x, int y) {
 		
-		X = (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * x / Sizes.FIELD_NUMBER + Sizes.BOARD_OFFSET;
+		X = (Sizes.BOARD_WIDTH - 2 * Sizes.BOARD_OFFSET) * x / Sizes.FIELD_NUMBER + Sizes.BOARD_OFFSET;
 		Y = (int)(Sizes.GAME_HEIGHT * 1 / 7) + Sizes.BOARD_HEIGHT - (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * (y + 1) / Sizes.FIELD_NUMBER - Sizes.BOARD_OFFSET;
 		
 		drawer = Drawer.getInstance();
@@ -34,7 +34,7 @@ public class BoardField implements Drawable{
 	}
 
 	public void setPosition(int x, int y) {
-		X = (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * x / Sizes.FIELD_NUMBER + Sizes.BOARD_OFFSET;
+		X = (Sizes.BOARD_WIDTH - 2 * Sizes.BOARD_OFFSET) * x / Sizes.FIELD_NUMBER + Sizes.BOARD_OFFSET;
 		Y = (int)(Sizes.GAME_HEIGHT * 1 / 7) + Sizes.BOARD_HEIGHT - (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET) * (y + 1) / Sizes.FIELD_NUMBER - Sizes.BOARD_OFFSET;
 	}
 	
@@ -115,7 +115,7 @@ public class BoardField implements Drawable{
 	
 	private void drawSelection(MediaContainer<Sprite> sprite) {
 
-		drawer.draw(sprite, X - (int)(10 * Sizes.RESIZE_FACTOR), Y - (int)(10 * Sizes.RESIZE_FACTOR));
+		drawer.draw(sprite, X - (int)(10 * Sizes.WIDTH_FACTOR), Y - (int)(10 * Sizes.HEIGHT_FACTOR));
 	}
 	
 	private void drawChecker(MediaContainer<Sprite> sprite) {

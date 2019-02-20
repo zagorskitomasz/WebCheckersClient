@@ -46,7 +46,7 @@ public enum Sprites implements MediaContainer<Sprite>{
 		for(int i = 0; i < amount; i++) {
 			
 			Sprite sprite = new Sprite(new Texture(filename));
-			sprite.setSize(sprite.getWidth() * Sizes.RESIZE_FACTOR, sprite.getHeight() * Sizes.RESIZE_FACTOR);
+			sprite.setSize(sprite.getWidth() * Sizes.WIDTH_FACTOR, sprite.getHeight() * Sizes.HEIGHT_FACTOR);
 			sprites.add(sprite);
 		}
 

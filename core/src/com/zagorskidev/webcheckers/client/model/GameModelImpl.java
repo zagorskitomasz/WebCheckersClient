@@ -74,7 +74,7 @@ public class GameModelImpl implements GameModel {
 		invertButton.draw();
 		
 		if(label != null)
-			drawer.draw(label.getSprite(), (int)(100 * Sizes.RESIZE_FACTOR), (int)(20 * Sizes.RESIZE_FACTOR));
+			drawer.draw(label.getSprite(), (int)(100 * Sizes.WIDTH_FACTOR), (int)(20 * Sizes.HEIGHT_FACTOR));
 	}
 
 	@Override

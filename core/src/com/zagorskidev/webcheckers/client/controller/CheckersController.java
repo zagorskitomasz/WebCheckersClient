@@ -85,9 +85,9 @@ public class CheckersController implements Controller{
 	
 	private Position calculatePosition(int xClick, int yClick) {
 		
-		int x = (xClick - Sizes.BOARD_OFFSET) * Sizes.FIELD_NUMBER / (Sizes.BOARD_HEIGHT - 2 * Sizes.BOARD_OFFSET);
-		int y = (yClick - (int)(Sizes.GAME_HEIGHT - Sizes.BOARD_HEIGHT - (Sizes.GAME_HEIGHT * 1 / 7)) - Sizes.BOARD_OFFSET) / Sizes.FIELD_SIZE;
-		
+		int x = (xClick - Sizes.BOARD_OFFSET) * Sizes.FIELD_NUMBER / (Sizes.BOARD_WIDTH - 2 * Sizes.BOARD_OFFSET);
+		int y = (yClick - (int)(Sizes.GAME_HEIGHT - Sizes.BOARD_HEIGHT - (Sizes.GAME_HEIGHT * 1 / 7)) - Sizes.BOARD_OFFSET) / Sizes.FIELD_HEIGHT;
+
 		if(xClick < Sizes.BOARD_OFFSET)
 			x = -1;
 		
